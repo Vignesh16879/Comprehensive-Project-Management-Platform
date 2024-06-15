@@ -72,55 +72,79 @@ export default class SideNavbar extends Component {
                 </svg>
 
                 <main className="d-flex flex-nowrap">
-                    <div className="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" width="280px" position="fixed">
-                        <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <div className="d-flex flex-column flex-shrink-0 p-3 " width="300px" position="fixed">
+                        <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto  text-decoration-none">
                         <Image src={ logo } className="bi pe-none me-2" alt="" width="40" height="32"/>
                         <span className="fs-4">DragonEyeX</span>
                         </a>
                         <hr/>
                         <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <a href="#home" className="nav-link active" aria-current="page">
-                            <svg className="bi pe-none me-2" width="16" height="16"><use href="#home"/></svg>
-                            Home
+                                <svg className="bi pe-none me-2" width="16" height="16">
+                                <use href="#home"/>
+                            </svg>
+                                Home
+                            </a>
+                        </li> */}
+                        <li>
+                            <a href="/dashboard" className="nav-link ">
+                                <svg className="bi pe-none me-2" width="16" height="16">
+                                    <use href="#speedometer2"/>
+                                </svg>
+                                Dashboard
                             </a>
                         </li>
                         <li>
-                            <a href="#home" className="nav-link text-white">
-                            <svg className="bi pe-none me-2" width="16" height="16"><use href="#speedometer2"/></svg>
-                            Dashboard
+                            <a href="/assignments" className="nav-link ">
+                                <svg className="bi pe-none me-2" width="16" height="16">
+                                    <use href="#table"/>
+                                </svg>
+                                Assignments
                             </a>
                         </li>
                         <li>
-                            <a href="#home" className="nav-link text-white">
-                            <svg className="bi pe-none me-2" width="16" height="16"><use href="#table"/></svg>
-                            Orders
+                            <a href="/projects" className="nav-link ">
+                                <svg className="bi pe-none me-2" width="16" height="16">
+                                    <use href="#grid"/>
+                                </svg>
+                                Projects
                             </a>
                         </li>
                         <li>
-                            <a href="#home" className="nav-link text-white">
-                            <svg className="bi pe-none me-2" width="16" height="16"><use href="#grid"/></svg>
-                            Products
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#home" className="nav-link text-white">
-                            <svg className="bi pe-none me-2" width="16" height="16"><use href="#people-circle"/></svg>
-                            Customers
+                            <a href="/manageprojects" className="nav-link ">
+                                <svg className="bi pe-none me-2" width="16" height="16">
+                                    <use href="#people-circle"/>
+                                </svg>
+                                Manage projects
                             </a>
                         </li>
                         </ul>
                         <hr/>
                         <div className="dropdown">
-                        <a href="#home" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#home" className="d-flex align-items-center  text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src={ profileimage } alt="" width="32" height="32" className="rounded-circle me-2" />
                             <strong>{ username }</strong>
                         </a>
                         <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a className="dropdown-item" href="/settings">Settings</a></li>
-                            <li><a className="dropdown-item" href="/profile">Profile</a></li>
-                            <li><hr className="dropdown-divider" /></li>
-                            <li><a className="dropdown-item" href="/logout">Sign out</a></li>
+                            <li>
+                                <a className="dropdown-item" href="/settings">
+                                    Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a className="dropdown-item" href="/profile">
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <hr className="dropdown-divider" />
+                            </li>
+                            <li>
+                                <a className="dropdown-item" href="/logout">
+                                    Sign out
+                                </a>
+                            </li>
                         </ul>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import './css/index.css';
 
 // Helper
+import TITLE from "./info/title";
 import TopNavbar from './helper/topnavbar';
 import SideNavbar from './helper/sidenavbar';
 import Footer from './helper/footer';
@@ -101,6 +102,7 @@ const texts = [
 ];
 
 const sliderImages = {
+    [images[0]]  : [slides[0],  labels[0],  texts[0] ],
     [images[1]]  : [slides[1],  labels[1],  texts[1] ],
     [images[2]]  : [slides[2],  labels[2],  texts[2] ],
     [images[3]]  : [slides[3],  labels[3],  texts[3] ],
@@ -114,34 +116,29 @@ const sliderImages = {
     [images[11]] : [slides[11], labels[11], texts[11]],
     [images[12]] : [slides[12], labels[12], texts[12]],
     [images[13]] : [slides[13], labels[13], texts[13]],
-    [images[14]] : [slides[14], labels[14], texts[14]],
-    [images[15]] : [slides[15], labels[15], texts[15]]
+    [images[14]] : [slides[14], labels[14], texts[14]]
 };
 
-const TITLE = "DragonEyeX";
+const Page_TITLE = TITLE;
 const username = "Vignesh Goswami";
 const profileimage = profile_avatar;
 
 
 export default class Index extends Component {
     componentDidMount() {
-        document.title = TITLE;
+        document.title = Page_TITLE;
     }
 
     render() {
         return (
             <>
-                <TopNavbar />
-                <Slider slides = { sliderImages } />
-                <AboutUs />
-                <Testimonials />
-                <Footer />
-                {/* <SideNavbar username={ username } profileimage={ profileimage }>
+                {/* <SideNavbar username={ username } profileimage={ profileimage }> */}
+                    <TopNavbar />
                     <Slider slides = { sliderImages } />
                     <AboutUs />
                     <Testimonials />
                     <Footer />
-                </SideNavbar> */}
+                {/* </SideNavbar> */}
             </>
         )
     }
