@@ -1,12 +1,17 @@
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from rest_framework import routers
+from .views import *
 
-from . import views
+
+router = routers.DefaultRouter()
+router.register(r'register', RegisterView, basename='register')
+router.register(r'login', LoginView, basename='login')
+router.register(r'profile', ProfileView, basename='profile')
+router.register(r'dashboard', DashboardView, basename='dashboard')
 
 
 urlpatterns = [
-    path("", views.index, name = "Index"),
-    path("home", views.home, name = "Home"),
-    path("login", views.login, name = "Login"),
-    path("logout", views.logout, name = "Logout"),
-    path("profile", views.profile, name = "Profile")
-]
+    path("", include(router.urls)),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
