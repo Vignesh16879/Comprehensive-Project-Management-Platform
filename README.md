@@ -13,14 +13,14 @@ Develop a web-based platform to efficiently manage projects and team collaborati
 
 ### User Management and Authentication
 
-#### User Registration and Login
+#### 1. User Registration and Login
 - **Sign Up**: Users can register using their name, email, mobile number, password, and billing address.
 - **Secure Login**: Secure login and signup processes ensure users are authenticated before accessing project management features.
 
-#### Profile Management
+#### 2. Profile Management
 - **Profile Updates**: Users can update their personal information and manage their profiles through a dedicated user interface.
 
-#### Session and Token Management
+#### 3. Session and Token Management
 - **Secure Sessions**: Server-side storage of session data ensures secure session management.
 - **Token-Based Authentication**: Stateless and scalable interactions are enabled through token-based authentication, ensuring secure user identity verification.
 
