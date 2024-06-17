@@ -1,7 +1,24 @@
 # Comprehensive Project Management Platform
+
 Develop a web-based platform to efficiently manage projects and team collaborations. It includes user registration, login, a comprehensive dashboard, chat/inbox functionality, project management, assignment tracking, and transaction monitoring.
 
- 
+## Table of Contents
+1. [Overview](#overview)
+2. [Key Features](#key-features)
+    - [User Management and Authentication](#user-management-and-authentication)
+        - [User Registration and Login](#1-user-registration-and-login)
+        - [Profile Management](#2-profile-management)
+        - [Session and Token Management](#3-session-and-token-management)
+    - [Project Management](#project-management)
+        - [Project Creation and Hosting](#1-project-creation-and-hosting)
+        - [Team Collaboration](#2-team-collaboration)
+        - [Assignment and Deadline Management](#3-assignment-and-deadline-management)
+        - [Assignment Submission](#4-assignment-submission)
+    - [User Interface and Experience](#user-interface-and-experience)
+        - [User-Friendly Interface](#1-user-friendly-interface)
+        - [Dashboard for Project Hosts](#2-dashboard-for-project-hosts)
+        - [Notification System](#4-notification-system)
+
 ## Overview
 1. Provide an intuitive user interface for project and assignment management.
 2. Ensure secure and efficient user registration and login processes.
