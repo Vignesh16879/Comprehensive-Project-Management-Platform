@@ -1,2 +1,9 @@
 # Comprehensive Project Management Platform
  
+## Overview
+1. Provide an intuitive user interface for project and assignment management.
+2. Ensure secure and efficient user registration and login processes.
+3. Facilitate team collaboration through chat and notifications.
+4. Streamline project management from assignment allocation to completion.
+5. Offer detailed tracking and reporting of transactions related to projects and assignments.
+
