@@ -26,32 +26,32 @@ Develop a web-based platform to efficiently manage projects and team collaborati
 
 ### Project Management
 
-#### Project Creation and Hosting
+#### 1. Project Creation and Hosting
 - **Project Registration**: Project hosts can register and describe their project ideas, making them available for other users to view.
 - **Project Details**: Stored details include project name, host name, and project description.
 
-#### Team Collaboration
+#### 2. Team Collaboration
 - **Browse Projects**: Users can browse project ideas and request to join project teams.
 - **Manage Requests**: Project hosts can review and accept or decline requests from users wishing to join their projects.
 
-#### Assignment and Deadline Management
+#### 3. Assignment and Deadline Management
 - **Task Assignment**: Project hosts can assign tasks and set deadlines for team members.
 - **View Assignments**: Team members can view their assignments and deadlines within the project interface.
 
-#### Assignment Submission
+#### 4. Assignment Submission
 - **Submit Assignments**: Team members can submit their completed assignments through a dedicated submission page.
 - **Track Submissions**: The system tracks submissions and deadlines, providing reminders and notifications as needed.
 
 ### User Interface and Experience
 
-#### User-Friendly Interface
+#### 1. User-Friendly Interface
 - **Intuitive Design**: The website features an intuitive and easy-to-navigate design to enhance user experience.
 - **Responsive Design**: Ensures accessibility across various devices and screen sizes.
 
-#### Dashboard for Project Hosts
+#### 2. Dashboard for Project Hosts
 - **Comprehensive Dashboard**: A comprehensive dashboard where project hosts can manage team requests, assignments, and view project progress.
 - **Visual Indicators**: Visual indicators for pending requests, upcoming deadlines, and submission status.
 
-#### Notification System
+#### 4. Notification System
 - **Real-Time Notifications**: Real-time notifications for project updates, assignment deadlines, and team requests.
 - **Email and In-App Notifications**: Keeps users informed and engaged.
