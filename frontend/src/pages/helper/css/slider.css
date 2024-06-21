@@ -75,9 +75,10 @@
 .image-container {
     position: relative;
     width: 100%;
-    padding-top: 42.86%; /* 9 / 21 * 100 (to maintain 21:9 aspect ratio) */
+    padding-top: 47.00%; 
     overflow: hidden;
 }
+
 .responsive-image {
     position: absolute;
     top: 0;

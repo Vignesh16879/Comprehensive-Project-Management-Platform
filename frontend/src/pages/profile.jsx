@@ -4,7 +4,8 @@ import axios from "axios";
 
 import AOS from 'aos';
 import Typed from 'typed.js';
-import PureCounter from "@srexi/purecounterjs";
+// eslint-disable-next-line
+// import { PureCounter } from '@srexi/purecounterjs';
 
 import './assets/vendor/aos/aos.css';
 import "./assets/vendor/bootstrap/css/bootstrap.min.css";
@@ -16,8 +17,8 @@ import './assets/css/style.css';
 import './css/profile.css';
 
 import TITLE from "./info/title";
-import TopNavbar from './helper/topnavbar';
-import SideNavbar from './helper/sidenavbar';
+import SideBar from './helper/sidebar';
+import TopBar from './helper/topbar';
 import Footer from './helper/footer';
 
 import profile_avatar from "./images/profile_avatar.png";
@@ -66,12 +67,12 @@ export default class Profile extends Component {
     
         this.typed = new Typed(".typed", options);
 
-        new PureCounter();
+        // new PureCounter();
     }
 
     refreshList = () => {
         axios
-            .post("/api/profile/")
+            .post("/api/profile/profile")
             .then((res) => this.setState({ todoList: res.data }))
             .catch((err) => console.log(err));
     };
@@ -85,7 +86,8 @@ export default class Profile extends Component {
     render() {
         return (
             <>
-                <SideNavbar username={ username } profileimage={ profileimage }>
+                <SideBar username={ username } profileimage={ profileimage }>
+                    <TopBar page="Profile">
                     <div className='profile-container'>
                         {/* Hero */}
                         <section id="hero" className="d-flex flex-column justify-content-center align-items-center">
@@ -595,11 +597,18 @@ export default class Profile extends Component {
                                                     <h4>Call:</h4>
                                                     <p>+1 5589 55488 55</p>
                                                 </div>
-                                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" border="0" width="100%" height="290px" allowfullscreen></iframe>
+                                                <iframe
+                                                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
+                                                    frameBorder="0"
+                                                    width="100%"
+                                                    height="290px"
+                                                    allowFullScreen
+                                                    title="Google Maps Downtown Conference Center"
+                                                ></iframe>
                                             </div>
                                         </div>
                                         <div className="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left">
-                                            <form action="forms/contact.php" method="post" role="form" className="php-email-form">
+                                            <form action="forms/contact.php" method="post" className="php-email-form">
                                                 <Row>
                                                     <div className="col-md-6 form-group">
                                                         <label>Your Name</label>
@@ -632,7 +641,8 @@ export default class Profile extends Component {
                         {/* </main> */}
                     </div>
                     <Footer />
-                </SideNavbar>
+                    </TopBar>
+                </SideBar>
             </>
         );
     }

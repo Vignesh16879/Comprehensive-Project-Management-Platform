@@ -1,32 +1,90 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Button, Image, Card, Form, Table, Row, Col, CardFooter } from 'react-bootstrap';
 
 import './css/projects.css';
 
-import TITLE from "./info/title";
-import TopNavbar from './helper/topnavbar';
-import SideNavbar from './helper/sidenavbar';
-import ToolBar from './helper/toolbar';
+import csrftoken from './helper/crsf'; 
+import TITLE from './info/title';
+import Loader from './helper/loader';
+import BACKENDURL from './info/backend';
+import TopBar from "./helper/topbar";
+import SideBar from "./helper/sidebar";
 import Footer from './helper/footer';
-
-import profile_avatar from "./images/profile_avatar.png";
 
 
 const Page_TITLE = TITLE + " - Projects";
-const username = "Vignesh Goswami";
-const profileimage = profile_avatar;
 
 
 export default class Projects extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            viewCompleted: false,
+            todoList: [],
+            modal: false,
+            activeItem: {},
+            user_data: {
+                username: '',
+                profileimage: ''
+            },
+            isLoading: true,
+            error: null
+        };
+    }
+
     componentDidMount() {
+        this.isUserAuthorized();
         document.title = Page_TITLE;
     }
-    
+
+    isUserAuthorized = () => {
+        axios
+            .post(
+                BACKENDURL + '/api/projects/isauthorized/',
+                {},
+                { headers: { 'X-CSRFToken': csrftoken } }
+            )
+            .then((response) => {
+                const { username, profileimage } = response.data.data;
+                this.setState({
+                    isLoading: false,
+                    user_data: { username, profileimage }
+                });
+                console.log(profileimage);
+            })
+            .catch((error) => {
+                this.setState({ 
+                    error: true,
+                    isLoading: false
+                });
+                console.log('Something unexpected happened. Error: ' + error);
+            });
+    };
+
     render() {
+        const { user_data, isLoading, error } = this.state;
+
+        if (isLoading) {
+            return (
+                <>
+                    <Loader />
+                </>
+            );
+        }
+
+        // if (error) {
+        //     return (
+        //         <>
+        //             <div>{error}</div>
+        //         </>
+        //     );
+        // }
+
         return (
             <>
-                <SideNavbar username={username} profileimage={profileimage}>
-                    {/* <TopNavbar /> */}
+                <SideBar>
+                    <TopBar page="Projects">
                     <div className='projects-container'>
                         <Row>
                             <Col className="mt-3">
@@ -44,7 +102,7 @@ export default class Projects extends Component {
                                         <Col md={4}>
                                             <Card.Img
                                                 variant="top"
-                                                src={ profile_avatar }
+                                                src={ user_data.profileimage }
                                                 alt="Card image cap"
                                             />
                                         </Col>
@@ -83,7 +141,7 @@ export default class Projects extends Component {
                                         <Col md={4}>
                                             <Card.Img
                                             variant="top"
-                                            src={ profile_avatar }
+                                            src={ user_data.profileimage }
                                             alt="Card image cap"
                                             />
                                         </Col>
@@ -120,7 +178,8 @@ export default class Projects extends Component {
 
                     <br />
                     <Footer />
-                </SideNavbar>
+                    </TopBar>
+                </SideBar>
             </>
         );
     }

@@ -7,14 +7,12 @@ import './css/index.css';
 // Helper
 import TITLE from "./info/title";
 import TopNavbar from './helper/topnavbar';
-import SideNavbar from './helper/sidenavbar';
 import Footer from './helper/footer';
 import Slider from './helper/slider';
 import AboutUs from './helper/aboutus';
 import Testimonials from './helper/testimonials';
 
 // Images
-import profile_avatar from "./images/profile_avatar.png";
 import image01 from "./images/image01.jpg";
 import image02 from "./images/image02.jpg";
 import image03 from "./images/image03.jpg";
@@ -120,8 +118,6 @@ const sliderImages = {
 };
 
 const Page_TITLE = TITLE;
-const username = "Vignesh Goswami";
-const profileimage = profile_avatar;
 
 
 export default class Index extends Component {

@@ -10,6 +10,10 @@ router.register(r'register', RegisterView, basename='register')
 router.register(r'login', LoginView, basename='login')
 router.register(r'profile', ProfileView, basename='profile')
 router.register(r'dashboard', DashboardView, basename='dashboard')
+router.register(r'projects', ProjectsView, basename='projects')
+router.register(r'assignments', AssignmentsView, basename='assignment')
+router.register(r'manageprojects', ManageProjectsView, basename='manageprojects')
+router.register(r'project', ProjectView, basename='project')
 
 
 urlpatterns = [

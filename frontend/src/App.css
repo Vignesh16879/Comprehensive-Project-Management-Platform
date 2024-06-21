@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+
+.bd-mode-toggle {
+  z-index: 1100;
+}
+
+.bd-mode-toggle .dropdown {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1100;
+}

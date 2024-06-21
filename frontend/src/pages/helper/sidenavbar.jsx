@@ -123,7 +123,7 @@ export default class SideNavbar extends Component {
                         <hr/>
                         <div className="dropdown">
                         <a href="#home" className="d-flex align-items-center  text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src={ profileimage } alt="" width="32" height="32" className="rounded-circle me-2" />
+                            <img src={ profileimage } alt="" width="32" height="32" className="rounded-circle me-2" object-fit="cover" border-radius="50%" />
                             <strong>{ username }</strong>
                         </a>
                         <ul className="dropdown-menu dropdown-menu-dark text-small shadow">

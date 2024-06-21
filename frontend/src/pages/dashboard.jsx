@@ -5,13 +5,14 @@ import './css/dashboard.css';
 
 import csrftoken from './helper/crsf'; 
 import TITLE from './info/title';
+import Loader from './helper/loader';
 import BACKENDURL from './info/backend';
-import TopNavbar from './helper/topnavbar';
-import SideNavbar from './helper/sidenavbar';
 import Footer from './helper/footer';
+import SideBar from './helper/sidebar';
+import TopBar from './helper/topbar';
+import Testimonials from "./helper/testimonials";
 
-import profile_avatar from './images/profile_avatar.png';
-
+import CryptoUtils from './helper/crypto';
 
 const Page_TITLE = TITLE + ' - Dashboard';
 
@@ -31,11 +32,23 @@ export default class Dashboard extends Component {
             isLoading: true,
             error: null
         };
+        this.isUserAuthorizedCalled = false;
     }
 
     componentDidMount() {
-        this.isUserAuthorized();
+        if (!this.isUserAuthorizedCalled) {
+            this.isUserAuthorizedCalled = true;
+            this.isUserAuthorized();
+        }
+
         document.title = Page_TITLE;
+    }
+
+    handleDecryption = (raw) => {
+        const crypto = new CryptoUtils();
+        const data = crypto.decrypt(raw);
+
+        return { username: data["username"], profileimage: data["profileimage"] };
     }
 
     isUserAuthorized = () => {
@@ -46,16 +59,29 @@ export default class Dashboard extends Component {
                 { headers: { 'X-CSRFToken': csrftoken } }
             )
             .then((response) => {
-                const { username, profileimage } = response.data.data;
+                var success = response.data.success;
+                
+                if(success) {
+                    const { username, profileimage } = this.handleDecryption(response.data.data);
+                    this.setState({
+                        user_data: {
+                            "username": username,
+                            "profileimage": profileimage
+                        }
+                    })
+                }
+                else {
+                    this.setState({
+                        error: response.data.error
+                    });    
+                }
                 this.setState({
-                    isLoading: false,
-                    user_data: { username, profileimage }
+                    isLoading: false
                 });
-                console.log(profileimage);
             })
             .catch((error) => {
                 this.setState({ 
-                    error: true,
+                    error: false,
                     isLoading: false
                 });
                 console.log('Something unexpected happened. Error: ' + error);
@@ -66,7 +92,11 @@ export default class Dashboard extends Component {
         const { user_data, isLoading, error } = this.state;
 
         if (isLoading) {
-            return (<div>Loading...</div>);
+            return (
+                <>
+                    <Loader />
+                </>
+            );
         }
 
         if (error) {
@@ -75,12 +105,16 @@ export default class Dashboard extends Component {
 
         return (
             <>
-                <SideNavbar username={ user_data.username } profileimage={ user_data.profileimage }>
-                    <div className='container'>
-                        Dashboard
-                    </div>
-                    <Footer />
-                </SideNavbar>
+                <SideBar username={ user_data.username } profileimage={ user_data.profileimage }>
+                    <TopBar page="Dashboard">
+                        <Testimonials />
+                        <Testimonials />
+                        <Testimonials />
+                        <Testimonials />
+                        <Testimonials />
+                        <Footer />
+                    </TopBar>
+                </SideBar>
             </>
         );
     }
