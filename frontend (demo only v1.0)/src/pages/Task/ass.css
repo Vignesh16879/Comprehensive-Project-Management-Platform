@@ -1,0 +1,25 @@
+/* TaskItem.css */
+.task-item {
+    height: 20%;
+    border-left: 4px solid #007bff;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .task-item:hover {
+    transform: scale(1.02);
+  }
+  
+  .task-name {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+  
+  .task-project {
+    margin: 0;
+    color: #6c757d;
+  }
+  
+  .task-deadline {
+    font-size: 0.875rem;
+  }
+  
