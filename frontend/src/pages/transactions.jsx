@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Form, Button, Image, InputGroup, FormControl, Table, Pagination, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Row, Col, Card, Form, Button, Image, InputGroup, FormControl, Table, Pagination, DropdownButton, Dropdown, Modal } from 'react-bootstrap';
 
 import Loader from './helper/loader';
 import Footer from './helper/footer';
@@ -19,12 +19,11 @@ const Page_TITLE = WebsiteTITLE + ' - Transactions';
 const transactionData = [];
 for (let i = 1; i <= 1000; i++) {
     transactionData.push({
-        author: `Author ${i}`,
-        email: `author${i}@example.com`,
-        function: `Function ${i}`,
-        department: `Department ${i}`,
-        status: i % 2 === 0 ? 'Online' : 'Offline',
-        employedDate: `2024-01-${(i % 30) + 1}`,
+        transactionID: i,
+        company: `Company ${i}`,
+        date: `2024-01-${(i % 30) + 1}`,
+        amount: (Math.random() * 1000).toFixed(2),
+        remarks: `Remark ${i}`,
         profileImage: 'https://via.placeholder.com/50'
     });
 }
@@ -45,10 +44,13 @@ export default class Transactions extends Component {
             error: null,
             transactions: transactionData,
             search: '',
-            sortColumn: 'author',
+            sortColumn: 'transactionID',
             sortDirection: 'asc',
             currentPage: 1,
-            itemsPerPage: 10
+            itemsPerPage: 10,
+            showModal: false,
+            startDate: '',
+            endDate: ''
         };
     }
 
@@ -74,16 +76,36 @@ export default class Transactions extends Component {
         this.setState({ itemsPerPage: itemsPerPage === 'All' ? this.state.transactions.length : itemsPerPage, currentPage: 1 });
     }
 
+    handleShowModal = () => {
+        this.setState({ showModal: true });
+    }
+
+    handleCloseModal = () => {
+        this.setState({ showModal: false });
+    }
+
+    handleFilterByDate = () => {
+        const { startDate, endDate, transactions } = this.state;
+        const filteredTransactions = transactions.filter(transaction => {
+            const transactionDate = new Date(transaction.date);
+            return transactionDate >= new Date(startDate) && transactionDate <= new Date(endDate);
+        });
+        this.setState({ transactions: filteredTransactions, showModal: false, currentPage: 1 });
+    }
+
+    handleDateChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
     renderTableRows = () => {
         const { transactions, search, sortColumn, sortDirection, currentPage, itemsPerPage } = this.state;
 
         // Filter transactions based on search input
         const filteredTransactions = transactions.filter(transaction =>
-            transaction.author.toLowerCase().includes(search.toLowerCase()) ||
-            transaction.email.toLowerCase().includes(search.toLowerCase()) ||
-            transaction.function.toLowerCase().includes(search.toLowerCase()) ||
-            transaction.department.toLowerCase().includes(search.toLowerCase()) ||
-            transaction.status.toLowerCase().includes(search.toLowerCase())
+            transaction.company.toLowerCase().includes(search.toLowerCase()) ||
+            transaction.date.toLowerCase().includes(search.toLowerCase()) ||
+            transaction.amount.toLowerCase().includes(search.toLowerCase()) ||
+            transaction.remarks.toLowerCase().includes(search.toLowerCase())
         );
 
         // Sort transactions based on sortColumn and sortDirection
@@ -103,32 +125,11 @@ export default class Transactions extends Component {
 
         return currentTransactions.map((transaction, index) => (
             <tr key={index}>
-                <td>
-                    <div className="d-flex px-2 py-1">
-                        <div>
-                            <Image src={transaction.profileImage} className="avatar avatar-sm me-3" alt="user" />
-                        </div>
-                        <div className="d-flex flex-column justify-content-center">
-                            <h6 className="mb-0 text-sm">{transaction.author}</h6>
-                            <p className="text-xs text-secondary mb-0">{transaction.email}</p>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <p className="text-xs font-weight-bold mb-0">{transaction.function}</p>
-                    <p className="text-xs text-secondary mb-0">{transaction.department}</p>
-                </td>
-                <td className="align-middle text-center text-sm">
-                    <span className={`badge badge-sm bg-gradient-${transaction.status === 'Online' ? 'success' : 'secondary'}`}>{transaction.status}</span>
-                </td>
-                <td className="align-middle text-center">
-                    <span className="text-secondary text-xs font-weight-bold">{transaction.employedDate}</span>
-                </td>
-                <td className="align-middle">
-                    <a href="#" className="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                        Edit
-                    </a>
-                </td>
+                <td>{transaction.transactionID}</td>
+                <td>{transaction.company}</td>
+                <td>{transaction.date}</td>
+                <td>{transaction.amount}</td>
+                <td>{transaction.remarks}</td>
             </tr>
         ));
     }
@@ -138,11 +139,10 @@ export default class Transactions extends Component {
 
         // Filter transactions based on search input
         const filteredTransactions = transactions.filter(transaction =>
-            transaction.author.toLowerCase().includes(search.toLowerCase()) ||
-            transaction.email.toLowerCase().includes(search.toLowerCase()) ||
-            transaction.function.toLowerCase().includes(search.toLowerCase()) ||
-            transaction.department.toLowerCase().includes(search.toLowerCase()) ||
-            transaction.status.toLowerCase().includes(search.toLowerCase())
+            transaction.company.toLowerCase().includes(search.toLowerCase()) ||
+            transaction.date.toLowerCase().includes(search.toLowerCase()) ||
+            transaction.amount.toLowerCase().includes(search.toLowerCase()) ||
+            transaction.remarks.toLowerCase().includes(search.toLowerCase())
         );
 
         const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
@@ -182,7 +182,7 @@ export default class Transactions extends Component {
     }
 
     render() {
-        const { user_data, search, sortColumn, sortDirection } = this.state;
+        const { user_data, search, sortColumn, sortDirection, showModal, startDate, endDate } = this.state;
 
         return (
             <>
@@ -272,23 +272,30 @@ export default class Transactions extends Component {
                                                 />
                                             </InputGroup>
                                         </Col>
+                                        <Col md={6} className="text-end">
+                                            <Button variant="primary" onClick={this.handleShowModal}>
+                                                Filter by Date
+                                            </Button>
+                                        </Col>
                                     </Row>
                                     <Table responsive className="table align-items-center mb-0">
                                         <thead>
                                             <tr>
-                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 cursor-pointer" onClick={() => this.handleSort('author')}>
-                                                    Author {sortColumn === 'author' && <i className={`fas fa-sort-${sortDirection === 'asc' ? 'up' : 'down'}`}></i>}
+                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 cursor-pointer" onClick={() => this.handleSort('transactionID')}>
+                                                    Transaction ID {sortColumn === 'transactionID' && <i className={`fas fa-sort-${sortDirection === 'asc' ? 'up' : 'down'}`}></i>}
                                                 </th>
-                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 cursor-pointer" onClick={() => this.handleSort('function')}>
-                                                    Function {sortColumn === 'function' && <i className={`fas fa-sort-${sortDirection === 'asc' ? 'up' : 'down'}`}></i>}
+                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 cursor-pointer" onClick={() => this.handleSort('company')}>
+                                                    Company {sortColumn === 'company' && <i className={`fas fa-sort-${sortDirection === 'asc' ? 'up' : 'down'}`}></i>}
                                                 </th>
-                                                <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 cursor-pointer" onClick={() => this.handleSort('status')}>
-                                                    Status {sortColumn === 'status' && <i className={`fas fa-sort-${sortDirection === 'asc' ? 'up' : 'down'}`}></i>}
+                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 cursor-pointer" onClick={() => this.handleSort('date')}>
+                                                    Date {sortColumn === 'date' && <i className={`fas fa-sort-${sortDirection === 'asc' ? 'up' : 'down'}`}></i>}
                                                 </th>
-                                                <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 cursor-pointer" onClick={() => this.handleSort('employedDate')}>
-                                                    Employed Date {sortColumn === 'employedDate' && <i className={`fas fa-sort-${sortDirection === 'asc' ? 'up' : 'down'}`}></i>}
+                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 cursor-pointer" onClick={() => this.handleSort('amount')}>
+                                                    Amount {sortColumn === 'amount' && <i className={`fas fa-sort-${sortDirection === 'asc' ? 'up' : 'down'}`}></i>}
                                                 </th>
-                                                <th className="text-secondary opacity-7"></th>
+                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 cursor-pointer" onClick={() => this.handleSort('remarks')}>
+                                                    Remarks {sortColumn === 'remarks' && <i className={`fas fa-sort-${sortDirection === 'asc' ? 'up' : 'down'}`}></i>}
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -304,6 +311,32 @@ export default class Transactions extends Component {
                         <Footer />
                     </TopBar>
                 </SideBar>
+
+                <Modal show={showModal} onHide={this.handleCloseModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Filter by Date</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group controlId="startDate">
+                                <Form.Label>Start Date</Form.Label>
+                                <Form.Control type="date" name="startDate" value={startDate} onChange={this.handleDateChange} />
+                            </Form.Group>
+                            <Form.Group controlId="endDate">
+                                <Form.Label>End Date</Form.Label>
+                                <Form.Control type="date" name="endDate" value={endDate} onChange={this.handleDateChange} />
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleCloseModal}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={this.handleFilterByDate}>
+                            Apply Filter
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
     }
