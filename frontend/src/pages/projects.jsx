@@ -58,10 +58,10 @@ export default class Projects extends Component {
     }
 
     componentDidMount() {
-        if (!this.isUserAuthorizedCalled) {
-            this.isUserAuthorized();
-            this.isUserAuthorizedCalled = true;
-        }
+        // if (!this.isUserAuthorizedCalled) {
+        //     this.isUserAuthorized();
+        //     this.isUserAuthorizedCalled = true;
+        // }
         document.title = Page_TITLE;
     }
 
