@@ -5,7 +5,7 @@ import axios from "axios";
 import AOS from 'aos';
 import Typed from 'typed.js';
 // eslint-disable-next-line
-// import { PureCounter } from '@srexi/purecounterjs';
+import { PureCounter } from '@srexi/purecounterjs';
 
 import './assets/vendor/aos/aos.css';
 import "./assets/vendor/bootstrap/css/bootstrap.min.css";
@@ -21,6 +21,8 @@ import SideBar from './helper/sidebar';
 import TopBar from './helper/topbar';
 import Footer from './helper/footer';
 
+import logo from "./images/logo.png";
+import image01 from "./images/image01.jpg";
 import profile_avatar from "./images/profile_avatar.png";
 
 
@@ -66,8 +68,6 @@ export default class Profile extends Component {
         };
     
         this.typed = new Typed(".typed", options);
-
-        // new PureCounter();
     }
 
     refreshList = () => {
@@ -86,7 +86,7 @@ export default class Profile extends Component {
     render() {
         return (
             <>
-                <SideBar username={ username } profileimage={ profileimage }>
+                <SideBar page="Profile" username={ username } profileimage={ profileimage }>
                     <TopBar page="Profile">
                     <div className='profile-container'>
                         {/* Hero */}
@@ -109,7 +109,7 @@ export default class Profile extends Component {
                                     </div>
                                     <Row>
                                         <Col lg={4} data-aos="fade-right">
-                                            <Image src={ profileimage } className="img-fluid" alt="" />
+                                            <Image src={ image01 } className="img-fluid" alt="" />
                                         </Col>
                                         <Col lg={8} className="pt-4 pt-lg-0 content" data-aos="fade-left">
                                             <h3>UI/UX Designer &amp; Web Developer.</h3>
@@ -312,7 +312,7 @@ export default class Profile extends Component {
                                 <div className="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
                                     <div className="col-lg-4 col-md-6 portfolio-item filter-app">
                                     <div className="portfolio-wrap">
-                                        <Image src={ profile_avatar } className="img-fluid" alt="" />
+                                        <Image src={ logo } className="img-fluid" alt="" />
                                         <div className="portfolio-info">
                                         <h4>App 1</h4>
                                         <p>App</p>
@@ -325,7 +325,7 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="col-lg-4 col-md-6 portfolio-item filter-web">
                                     <div className="portfolio-wrap">
-                                        <Image src={ profile_avatar } className="img-fluid" alt="" />
+                                        <Image src={ logo } className="img-fluid" alt="" />
                                         <div className="portfolio-info">
                                         <h4>Web 3</h4>
                                         <p>Web</p>
@@ -338,7 +338,7 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="col-lg-4 col-md-6 portfolio-item filter-app">
                                     <div className="portfolio-wrap">
-                                        <Image src={ profile_avatar } className="img-fluid" alt="" />
+                                        <Image src={ logo } className="img-fluid" alt="" />
                                         <div className="portfolio-info">
                                         <h4>App 2</h4>
                                         <p>App</p>
@@ -351,7 +351,7 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="col-lg-4 col-md-6 portfolio-item filter-card">
                                     <div className="portfolio-wrap">
-                                        <Image src={ profile_avatar } className="img-fluid" alt="" />
+                                        <Image src={ logo } className="img-fluid" alt="" />
                                         <div className="portfolio-info">
                                         <h4>Card 2</h4>
                                         <p>Card</p>
@@ -364,7 +364,7 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="col-lg-4 col-md-6 portfolio-item filter-web">
                                     <div className="portfolio-wrap">
-                                        <Image src={ profile_avatar } className="img-fluid" alt="" />
+                                        <Image src={ logo } className="img-fluid" alt="" />
                                         <div className="portfolio-info">
                                         <h4>Web 2</h4>
                                         <p>Web</p>
@@ -377,7 +377,7 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="col-lg-4 col-md-6 portfolio-item filter-app">
                                     <div className="portfolio-wrap">
-                                        <Image src={ profile_avatar } className="img-fluid" alt="" />
+                                        <Image src={ logo } className="img-fluid" alt="" />
                                         <div className="portfolio-info">
                                         <h4>App 3</h4>
                                         <p>App</p>
@@ -390,7 +390,7 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="col-lg-4 col-md-6 portfolio-item filter-card">
                                     <div className="portfolio-wrap">
-                                        <Image src={ profile_avatar } className="img-fluid" alt="" />
+                                        <Image src={ logo } className="img-fluid" alt="" />
                                         <div className="portfolio-info">
                                         <h4>Card 1</h4>
                                         <p>Card</p>
@@ -403,7 +403,7 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="col-lg-4 col-md-6 portfolio-item filter-card">
                                     <div className="portfolio-wrap">
-                                        <Image src={ profile_avatar } className="img-fluid" alt="" />
+                                        <Image src={ logo } className="img-fluid" alt="" />
                                         <div className="portfolio-info">
                                         <h4>Card 3</h4>
                                         <p>Card</p>
@@ -416,7 +416,7 @@ export default class Profile extends Component {
                                     </div>
                                     <div className="col-lg-4 col-md-6 portfolio-item filter-web">
                                     <div className="portfolio-wrap">
-                                        <Image src={ profile_avatar } className="img-fluid" alt="" />
+                                        <Image src={ logo } className="img-fluid" alt="" />
                                         <div className="portfolio-info">
                                         <h4>Web 1</h4>
                                         <p>Web</p>
@@ -513,7 +513,7 @@ export default class Profile extends Component {
                                                 Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
                                                 <i className="bx bxs-quote-alt-right quote-icon-right"></i>
                                             </p>
-                                            <Image src={ profile_avatar } className="testimonial-img" alt="" />
+                                            <Image src={ logo } className="testimonial-img" alt="" />
                                             <h3>Saul Goodman</h3>
                                             <h4>Ceo &amp; Founder</h4>
                                             </div>
@@ -525,7 +525,7 @@ export default class Profile extends Component {
                                                 Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
                                                 <i className="bx bxs-quote-alt-right quote-icon-right"></i>
                                             </p>
-                                            <Image src={ profile_avatar } className="testimonial-img" alt="" />
+                                            <Image src={ logo } className="testimonial-img" alt="" />
                                             <h3>Sara Wilsson</h3>
                                             <h4>Designer</h4>
                                             </div>
@@ -537,7 +537,7 @@ export default class Profile extends Component {
                                                 Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
                                                 <i className="bx bxs-quote-alt-right quote-icon-right"></i>
                                             </p>
-                                            <Image src={ profile_avatar } className="testimonial-img" alt="" />
+                                            <Image src={ logo } className="testimonial-img" alt="" />
                                             <h3>Jena Karlis</h3>
                                             <h4>Store Owner</h4>
                                             </div>
@@ -549,7 +549,7 @@ export default class Profile extends Component {
                                                 Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore.
                                                 <i className="bx bxs-quote-alt-right quote-icon-right"></i>
                                             </p>
-                                            <Image src={ profile_avatar } className="testimonial-img" alt="" />
+                                            <Image src={ logo } className="testimonial-img" alt="" />
                                             <h3>Matt Brandon</h3>
                                             <h4>Freelancer</h4>
                                             </div>
@@ -561,7 +561,7 @@ export default class Profile extends Component {
                                                 Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa.
                                                 <i className="bx bxs-quote-alt-right quote-icon-right"></i>
                                             </p>
-                                            <Image src={ profile_avatar } className="testimonial-img" alt="" />
+                                            <Image src={ logo } className="testimonial-img" alt="" />
                                             <h3>John Larson</h3>
                                             <h4>Entrepreneur</h4>
                                             </div>

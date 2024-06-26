@@ -6,7 +6,7 @@ import "./css/topnavbar.css";
 
 export default class TopNavbar extends Component {
     render() {
-        const { children } = this.props;
+        const { isLogged, children } = this.props;
 
         return (
             <>
@@ -27,24 +27,38 @@ export default class TopNavbar extends Component {
                                     </button>
                                     <div className="collapse navbar-collapse" id="navigation">
                                         <ul className="navbar-nav mx-auto ms-xl-auto me-xl-7">
-                                            <li className="nav-item">
-                                                <a className="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/">
-                                                    <i className="fa fa-chart-pie opacity-6 text-auto me-1"></i>
-                                                    Home
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a className="nav-link me-2" href="/register">
-                                                    <i className="fas fa-user-circle opacity-6 text-auto me-1"></i>
-                                                    Sign Up
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a className="nav-link me-2" href="/login">
-                                                    <i className="fas fa-key opacity-6 text-auto me-1"></i>
-                                                    Sign In
-                                                </a>
-                                            </li>
+                                            {!isLogged ? (
+                                                <>
+                                                    <li className="nav-item">
+                                                        <a className="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/">
+                                                            <i className="fa fa-chart-pie opacity-6 text-auto me-1"></i>
+                                                            Home
+                                                        </a>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <a className="nav-link me-2" href="/register">
+                                                            <i className="fas fa-user-circle opacity-6 text-auto me-1"></i>
+                                                            Sign Up
+                                                        </a>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <a className="nav-link me-2" href="/login">
+                                                            <i className="fas fa-key opacity-6 text-auto me-1"></i>
+                                                            Sign In
+                                                        </a>
+                                                    </li>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <li className="nav-item">
+                                                        <a className="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/dashboard">
+                                                            <i className="fa fa-chart-pie opacity-6 text-auto me-1"></i>
+                                                            Dashboard
+                                                        </a>
+                                                    </li>
+                                                </>
+                                            )
+                                        }  
                                         </ul>
                                         {/* <li className="nav-item d-flex align-items-center">
                                             <a className="btn btn-round btn-sm mb-0 btn-outline-primary me-2" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-soft-ui-dashboard">Online Builder</a>
@@ -60,7 +74,7 @@ export default class TopNavbar extends Component {
                         </Col>
                     </Row>
                 </div>
-                <div class="fixed-plugin">
+                <div className="fixed-plugin">
                     { children }
                 </div>
             </>

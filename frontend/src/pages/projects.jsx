@@ -55,7 +55,7 @@ export default class Projects extends Component {
             })
             .catch((error) => {
                 this.setState({ 
-                    error: true,
+                    // error: true,
                     isLoading: false
                 });
                 console.log('Something unexpected happened. Error: ' + error);
@@ -73,17 +73,17 @@ export default class Projects extends Component {
             );
         }
 
-        // if (error) {
-        //     return (
-        //         <>
-        //             <div>{error}</div>
-        //         </>
-        //     );
-        // }
+        if (error) {
+            return (
+                <>
+                    <div>{error}</div>
+                </>
+            );
+        }
 
         return (
             <>
-                <SideBar>
+                <SideBar page="Projects">
                     <TopBar page="Projects">
                     <div className='projects-container'>
                         <Row>
