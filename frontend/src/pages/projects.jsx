@@ -46,7 +46,7 @@ export default class Projects extends Component {
                 username: '',
                 profileimage: ''
             },
-            isLoading: true,
+            isLoading: false, // For testing
             error: null,
             search: '',
             currentPage: 1,
