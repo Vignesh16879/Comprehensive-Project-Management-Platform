@@ -19,6 +19,9 @@ import Profile from './pages/profile';
 import Settings from "./pages/settings";
 import NotFound from './pages/notfoud'; // foud 🫤
 import ConnectPage from './pages/Connect/ConnectPage';
+import Task from './pages/Task/Task';
+import ManageTeam from './pages/Connect/ManageTeam';
+import OtherProfilePage from './pages/Connect/OtherProfilePage';
 
 
 export default class App extends Component {  
@@ -45,8 +48,11 @@ export default class App extends Component {
             <Route path = "/manage-project" element = { <ManageProject/> }      />
 
             <Route path = "/connect"        element = { <ConnectPage/> }        />  
+            <Route path = "/manage-team/:id"element = { <ManageTeam/> }         />
+            <Route path = "/oprofile/:id"   element = { <OtherProfilePage/> }   />
 
             <Route path = "/assignments"    element = { <Assignments/> }        />
+            <Route path = "/task/:id"       element = { <Task/> }               />
 
             <Route path = "*"               element = { <NotFound/> }           />
           </Routes>

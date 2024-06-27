@@ -1,6 +1,5 @@
 /* TaskItem.css */
 .task-item {
-    height: 20%;
     border-left: 4px solid #007bff;
     transition: transform 0.3s ease-in-out;
   }

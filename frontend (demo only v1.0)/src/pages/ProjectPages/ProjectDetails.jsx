@@ -1,21 +1,20 @@
 import React, { Component, useState } from 'react';
 import {
-  MDBCol,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
-  MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBBtn,
-  MDBBreadcrumb,
-  MDBBreadcrumbItem,
-  MDBProgress,
-  MDBProgressBar,
-  MDBIcon,
-  MDBListGroup,
-  MDBListGroupItem
-} from 'mdb-react-ui-kit';
+  Badge,
+  Button,
+  Card,
+  Navbar,
+  Nav,
+  Table,
+  Container,
+  Row,
+  Col,
+  Form,
+  OverlayTrigger,
+  Tooltip,
+  ProgressBar,
+  ListGroup
+} from "react-bootstrap";
 import BasePage from '../Base';
 
 import './style/projectdetails.css';
@@ -68,6 +67,17 @@ export default class ProjectDetails extends Component {
     console.log('Deleting project:', this.state.project.title);
   };
 
+  handleEditProject = () => {
+    console.log('editing');
+  }
+
+  handleManageProject = () => {
+    console.log('managing');
+  }
+  handleDeleteProject = () => {
+    console.log('deleting');
+  }
+
   render() {
     const { project } = this.state;
     const { isLoggedIn } = true;
@@ -78,188 +88,178 @@ export default class ProjectDetails extends Component {
 
     return (
       <BasePage toggleHeader={true} toggleSidebar={true} toggleFooter={false}>
-        <section>
-          <MDBContainer className="py-5">
-
-            <MDBRow>
-              <MDBCol lg="4">
-                <MDBCard className="mb-4">
-                  <MDBCardBody className="text-center">
-                    <MDBCardImage
+        <>
+          <Container className="py-5">
+            <Row>
+              <Col lg="4">
+                <Card className="mb-4">
+                  <Card.Body className="text-center">
+                    <Card.Img
                       src="./style/crea.jpg"
                       alt="img"
                       className="rounded-circle"
                       style={{ width: '150px' }}
-                      fluid />
+                      fluid="true"
+                    />
                     <h2 className="text-muted mb-1"><strong>{project.title}</strong></h2>
                     <p className="text-muted mb-1">{project.creator}</p>
-                    <hr/>
+                    <hr />
                     <p className="text-muted mb-4">
-                      {project.collaborators.map((c) => (
-                        <span>{c}  </span>
+                      {project.collaborators.map((c, index) => (
+                        <span key={index}>{c} </span>
                       ))}
                     </p>
                     <div className="d-flex justify-content-center mb-2">
-                      {isCreator && 
+                      {isCreator &&
                         <>
-                          <a href="#" onClick={this.handleEditProject} className="blue-button">Edit</a>
-                          <a href="#" onClick={this.handleManageProject} className="blue-button">Manage</a>
-                          <a href="#" onClick={this.handleDeleteProject} className="blue-button">Delete</a>
+                          <a href="#" className="btn btn-primary me-2">Edit</a>
+                          <a href="/manage-team/:id" className="btn btn-primary me-2">Manage</a>
+                          <a href="#" className="btn btn-danger">Delete</a>
                         </>
                       }
                       {isCollaborator &&
                         <>
-                          <a href="#" onClick={this.handleManageProject} className="blue-button">Manage</a>
-                          <a href="#" onClick={this.handleContact} className="blue-button">Contact</a>
+                          <a href="#" className="btn btn-primary me-2">Manage</a>
+                          <a href="#" className="btn btn-secondary">Contact</a>
                         </>
                       }
                       {!isCollaborator && !isCreator &&
                         <>
-                          <a href="#" onClick={this.handleManageProject} className="blue-button">Manage</a>
-                          <a href="#" onClick={this.handleContact} className="blue-button">Contact</a>
+                          <a href="#" className="btn btn-primary me-2">Manage</a>
+                          <a href="#" className="btn btn-secondary">Contact</a>
                         </>
                       }
                     </div>
-                  </MDBCardBody>
-                </MDBCard>
+                  </Card.Body>
+                </Card>
 
-                <MDBCard className="mb-4 mb-lg-0">
-                  <MDBCardBody className="p-0">
-                    <MDBListGroup flush className="rounded-3">
-                      <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                        <MDBIcon fas icon="globe fa-lg text-warning" />
-                        <MDBCardText>https://projectA.com</MDBCardText>
-                      </MDBListGroupItem>
-                      <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                        <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
-                        <MDBCardText>projectA</MDBCardText>
-                      </MDBListGroupItem>
-                      <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                        <MDBIcon fab icon="twitter fa-lg" style={{ color: '#55acee' }} />
-                        <MDBCardText>@projectA</MDBCardText>
-                      </MDBListGroupItem>
-                      <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                        <MDBIcon fab icon="instagram fa-lg" style={{ color: '#ac2bac' }} />
-                        <MDBCardText>projectA</MDBCardText>
-                      </MDBListGroupItem>
-                      <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                        <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
-                        <MDBCardText>projectA</MDBCardText>
-                      </MDBListGroupItem>
-                    </MDBListGroup>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-              <MDBCol lg="8">
-                <MDBCard className="mb-4">
-                  <MDBCardBody>
-                    <MDBRow>
-                      <MDBCol sm="3">
-                        <MDBCardText>Description</MDBCardText>
-                      </MDBCol>
-                      <MDBCol sm="9">
-                        <MDBCardText className="text-muted">{project.description}</MDBCardText>
-                      </MDBCol>
-                    </MDBRow>
+                <Card className="mb-4 mb-lg-0">
+                  <Card.Body className="p-0">
+                    <ListGroup variant="flush" className="rounded-3">
+                      <ListGroup.Item className="d-flex justify-content-between align-items-center p-3">
+                        <i className="fas fa-globe fa-lg text-warning"></i>
+                        <Card.Text>https://projectA.com</Card.Text>
+                      </ListGroup.Item>
+                      <ListGroup.Item className="d-flex justify-content-between align-items-center p-3">
+                        <i className="fab fa-github fa-lg" style={{ color: '#333333' }}></i>
+                        <Card.Text>projectA</Card.Text>
+                      </ListGroup.Item>
+                      <ListGroup.Item className="d-flex justify-content-between align-items-center p-3">
+                        <i className="fab fa-twitter fa-lg" style={{ color: '#55acee' }}></i>
+                        <Card.Text>@projectA</Card.Text>
+                      </ListGroup.Item>
+                      <ListGroup.Item className="d-flex justify-content-between align-items-center p-3">
+                        <i className="fab fa-instagram fa-lg" style={{ color: '#ac2bac' }}></i>
+                        <Card.Text>projectA</Card.Text>
+                      </ListGroup.Item>
+                      <ListGroup.Item className="d-flex justify-content-between align-items-center p-3">
+                        <i className="fab fa-facebook fa-lg" style={{ color: '#3b5998' }}></i>
+                        <Card.Text>projectA</Card.Text>
+                      </ListGroup.Item>
+                    </ListGroup>
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col lg="8">
+                <Card className="mb-4">
+                  <Card.Body>
+                    <Row>
+                      <Col sm="3">
+                        <Card.Text>Description</Card.Text>
+                      </Col>
+                      <Col sm="9">
+                        <Card.Text className="text-muted">{project.description}</Card.Text>
+                      </Col>
+                    </Row>
                     <hr />
-                    <MDBRow>
-                      <MDBCol sm="3">
-                        <MDBCardText>Budget</MDBCardText>
-                      </MDBCol>
-                      <MDBCol sm="9">
-                        <MDBCardText className="text-muted">{project.budget}</MDBCardText>
-                      </MDBCol>
-                    </MDBRow>
+                    <Row>
+                      <Col sm="3">
+                        <Card.Text>Budget</Card.Text>
+                      </Col>
+                      <Col sm="9">
+                        <Card.Text className="text-muted">{project.budget}</Card.Text>
+                      </Col>
+                    </Row>
                     <hr />
-                    <MDBRow>
-                      <MDBCol sm="3">
-                        <MDBCardText>Duration</MDBCardText>
-                      </MDBCol>
-                      <MDBCol sm="9">
-                        <MDBCardText className="text-muted">{project.duration}</MDBCardText>
-                      </MDBCol>
-                    </MDBRow>
+                    <Row>
+                      <Col sm="3">
+                        <Card.Text>Duration</Card.Text>
+                      </Col>
+                      <Col sm="9">
+                        <Card.Text className="text-muted">{project.duration}</Card.Text>
+                      </Col>
+                    </Row>
                     <hr />
-                    <MDBRow>
-                      <MDBCol sm="3">
-                        <MDBCardText>Expertise</MDBCardText>
-                      </MDBCol>
-                      <MDBCol sm="9">
-                        <MDBCardText className="text-muted">{project.expertise}</MDBCardText>
-                      </MDBCol>
-                    </MDBRow>
+                    <Row>
+                      <Col sm="3">
+                        <Card.Text>Expertise</Card.Text>
+                      </Col>
+                      <Col sm="9">
+                        <Card.Text className="text-muted">{project.expertise}</Card.Text>
+                      </Col>
+                    </Row>
                     <hr />
-                    <MDBRow>
-                      <MDBCol sm="3">
-                        <MDBCardText>Type</MDBCardText>
-                      </MDBCol>
-                      <MDBCol sm="9">
-                        <MDBCardText className="text-muted">{project.type}</MDBCardText>
-                      </MDBCol>
-                    </MDBRow>
-                  </MDBCardBody>
-                </MDBCard>
+                    <Row>
+                      <Col sm="3">
+                        <Card.Text>Type</Card.Text>
+                      </Col>
+                      <Col sm="9">
+                        <Card.Text className="text-muted">{project.type}</Card.Text>
+                      </Col>
+                    </Row>
+                  </Card.Body>
+                </Card>
 
-                <MDBRow>
-                  <MDBCol md="6">
-                    <MDBCard className="mb-4 mb-md-0">
-                      <MDBCardBody>
-                        <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">Progress</span> Project Status</MDBCardText>
-                        <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>UI Design</MDBCardText>
-                        <MDBProgress className="rounded">
-                          <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                        </MDBProgress>
+                <Row>
+                  <Col md="6">
+                    <Card className="mb-4 mb-md-0">
+                      <Card.Body>
+                        <Card.Text className="mb-4"><span className="text-primary font-italic me-1">Progress</span> Project Status</Card.Text>
+                        <Card.Text className="mb-1" style={{ fontSize: '.77rem' }}>UI Design</Card.Text>
+                        <ProgressBar now={80} className="rounded" />
 
-                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Front-end</MDBCardText>
-                        <MDBProgress className="rounded">
-                          <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                        </MDBProgress>
+                        <Card.Text className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Front-end</Card.Text>
+                        <ProgressBar now={72} className="rounded" />
 
-                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Back-end</MDBCardText>
-                        <MDBProgress className="rounded">
-                          <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                        </MDBProgress>
+                        <Card.Text className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Back-end</Card.Text>
+                        <ProgressBar now={89} className="rounded" />
 
-                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>UX & Research</MDBCardText>
-                        <MDBProgress className="rounded">
-                          <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                        </MDBProgress>
+                        <Card.Text className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>UX & Research</Card.Text>
+                        <ProgressBar now={55} className="rounded" />
 
-                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Overall</MDBCardText>
-                        <MDBProgress className="rounded">
-                          <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                        </MDBProgress>
-                      </MDBCardBody>
-                    </MDBCard>
-                  </MDBCol>
+                        <Card.Text className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Overall</Card.Text>
+                        <ProgressBar now={66} className="rounded" />
+                      </Card.Body>
+                    </Card>
+                  </Col>
 
-                  <MDBCol md="6">
-                    <MDBCard className="mb-4 mb-md-0">
-                      <MDBCardBody>
-                        <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Tags</MDBCardText>
+                  <Col md="6">
+                    <Card className="mb-4 mb-md-0">
+                      <Card.Body>
+                        <Card.Text className="mb-1" style={{ fontSize: '.77rem' }}>Tags</Card.Text>
                         {project.tags.map((t, key) => (
                           <div className="tag" key={key}>{t}</div>
                         ))}
-                        
-                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Framework</MDBCardText>
-                          <div className="tag">{project.framework}</div>
 
-                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Languages</MDBCardText>
-                          <div className="tag">{project.language}</div>
+                        <Card.Text className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Framework</Card.Text>
+                        <div className="tag">{project.framework}</div>
 
-                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Skills Required</MDBCardText>
+                        <Card.Text className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Languages</Card.Text>
+                        <div className="tag">{project.language}</div>
+
+                        <Card.Text className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Skills Required</Card.Text>
                         {project.skillsRequired.map((s, key) => (
                           <div className="tag" key={key}>{s}</div>
                         ))}
-                        
-                      </MDBCardBody>
-                    </MDBCard>
-                  </MDBCol>
-                </MDBRow>
-              </MDBCol>
-            </MDBRow>
-          </MDBContainer>
-        </section>
+
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Container>
+        </>
       </BasePage>
     );
   }

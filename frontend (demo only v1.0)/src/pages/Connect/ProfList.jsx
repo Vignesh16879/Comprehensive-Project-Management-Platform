@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from "react-bootstrap";
 
-import './conn.css';
+import './css/conn.css';
 
 const ProfileItem = (name, profession, img, location, wages, times, exp) => {
   return (
@@ -83,4 +83,4 @@ const ProfileList = ({ profiles = [] }) => {
   );
 };
 
-export default ProfileList;
+export {ProfileItem , ProfileList};

@@ -52,13 +52,15 @@ const TaskList = ({ tasks = [] }) => {
       <Row className="g-4">
         {tasks.map((task, index) => (
           <Col md={3} key={index}>
-            <TaskItem
-              name={task.name}
-              project={task.project}
-              img={task.img}
-              deadline={task.deadline}
-              borderColor={getRandomColor()}
-            />
+            <a href='/task/:id' key={index}>
+              <TaskItem
+                name={task.name}
+                project={task.project}
+                img={task.img}
+                deadline={task.deadline}
+                borderColor={getRandomColor()}
+              />
+            </a>
           </Col>
         ))}
       </Row>

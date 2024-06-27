@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BasePage from '../Base';
 
-import './conn.css';
+import './css/conn.css';
 import { profiles, professions } from './info.js';
-import ProfileList from './ProfList';
+import {ProfileList} from './ProfList';
 import countryOptions from '../../info/country';
 import ProfessionList from './jobs.js';
 import img1 from "./img/carousel-1.jpg";
