@@ -1,5 +1,4 @@
 {
-  "homepage" : "https://github.com/Vignesh16879/Comprehensive-Project-Management-Platform.git",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -44,9 +43,7 @@
     "start": "set PORT=7272 && react-scripts start --host 0.0.0.0",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build" 
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
