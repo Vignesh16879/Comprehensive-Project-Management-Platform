@@ -3,7 +3,7 @@ import { Image } from 'react-bootstrap';
 
 import "./css/sidenavbar.css";
 
-import logo from "./images/logo.png";
+import logo from "../Images/logo.png";
 
 
 export default class SideNavbar extends Component {

@@ -3,8 +3,7 @@ import { Image } from 'react-bootstrap';
 
 import "./css/sidebar.css";
 
-import logo from "./images/logo.png";
-import profile_avatar from "./images/profile_avatar.png";
+import logo from "../Images/logo.png";
 
 
 export default class SideBar extends Component {
@@ -257,7 +256,7 @@ export default class SideBar extends Component {
                       <div className="sidenav-footer mx-3 ">
                         <div className="dropdown">
                           <a href="#home" className="d-flex align-items-center  text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                              <img src={ profile_avatar } alt="" width="32" height="32" className="rounded-circle me-2" object-fit="cover" border-radius="50%" />
+                              <Image src={ profileimage } alt="" width="32" height="32" className="rounded-circle me-2" object-fit="cover" border-radius="50%" />
                               <strong>{ username }</strong>
                           </a>
                           <ul className="dropdown-menu dropdown-menu-auto text-small shadow">

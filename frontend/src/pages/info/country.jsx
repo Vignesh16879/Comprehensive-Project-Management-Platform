@@ -1261,4 +1261,6 @@ const countryOptions = [
      }
 ]
 
-export default countryOptions
+export {
+    countryOptions
+};

@@ -3,9 +3,9 @@ import { Row, Col, Card, Button } from 'react-bootstrap';
 
 import "./css/aboutus.css";
 
-import image21 from "./images/image21.jpg";
-import image22 from "./images/image22.jpg";
-import image23 from "./images/image23.jpg";
+import image21 from "../Images/image21.jpg";
+import image22 from "../Images/image22.jpg";
+import image23 from "../Images/image23.jpg";
 
 
 export default class AboutUS extends Component{

@@ -3,20 +3,21 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Pages
-import Index from './pages/index';
-import Login from './pages/login';
-import Logout from './pages/logout';
-import Register from './pages/register';
-import Dashboard from './pages/dashboard';
-import AddProject from './pages/addproject';
-import Projects from './pages/projects';
-import ManageProjects from "./pages/manage_projects";
-import Assignments from './pages/assignments';
-import Inbox from './pages/inbox';
-import Transactions from './pages/transactions';
-import Profile from './pages/profile';
-import Settings from "./pages/settings";
-import NotFound from './pages/notfoud';
+import Index from "./pages/Index/index";
+import Register from "./pages/Register/register";
+import Login from "./pages/Login/login";
+import Logout from "./pages/Logout/logout";
+import Dashboard from "./pages/Dashboard/dashboard";
+import Profile from "./pages/Profile/profile";
+import Projects from "./pages/Projects/projects";
+import Project from "./pages/Project/project";
+import Assignments from "./pages/Assignments/assignments";
+import AddProject from "./pages/AddProject/addproject";
+import ManageProjects from "./pages/ManageProjects/manage_projects";
+import Inbox from "./pages/Inbox/inbox";
+import Transactions from "./pages/Transactions/transactions";
+import Settings from "./pages/Settings/settings";
+import NotFound from "./pages/NotFound/notfoud";
 
 
 export default class App extends Component {  
@@ -32,7 +33,7 @@ export default class App extends Component {
 
             <Route path = "/dashboard"      element = { <Dashboard/> }          />
             <Route path = "/projects"       element = { <Projects/> }           />
-            <Route path = "/project/:id"    element = { <Projects/> }           />
+            <Route path = "/project/:id"    element = { <Project/> }            />
             
             <Route path = "/assignments"    element = { <Assignments/> }        />
             <Route path = "/manageprojects" element = { <ManageProjects/> }     />
