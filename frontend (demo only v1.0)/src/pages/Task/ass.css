@@ -1,7 +1,11 @@
 /* TaskItem.css */
 .task-item {
-    border-left: 4px solid #007bff;
+    position: relative;
+    padding: 1rem;
     transition: transform 0.3s ease-in-out;
+    margin-bottom: 1rem;
+    border-top: 5px solid var(--top-border-color); 
+    border-bottom: 2px solid var(--bottom-border-color); 
   }
   
   .task-item:hover {
@@ -20,5 +24,15 @@
   
   .task-deadline {
     font-size: 0.875rem;
+  }
+  
+  .task-item .top-border {
+    border-top-width: 20px;
+    border-top-style: solid;
+  }
+  
+  .task-item .bottom-border {
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
   }
   

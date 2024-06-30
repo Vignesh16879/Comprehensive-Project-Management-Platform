@@ -18,7 +18,7 @@ import "./ass.css";
 
 const TaskItem = ({ name, project, img, deadline, color }) => {
   return (
-    <Card className="task-item p-3 mb-4" style={{ border: `2px solid #ccc`, height: '200px', }}>
+    <Card className="task-item p-3 mb-4" style={{ '--top-border-color': color, '--bottom-border-color': color, height: "200px" }}>
       <Row className="g-3 align-items-center">
         <Col xs={3} md={2}>
           <img
@@ -48,7 +48,7 @@ const TaskList = ({ tasks = [] }) => {
   };
 
   return (
-    <Container>
+    <Container style={{padding: "20px"}}>
       <Row className="g-4">
         {tasks.map((task, index) => (
           <Col md={3} key={index}>

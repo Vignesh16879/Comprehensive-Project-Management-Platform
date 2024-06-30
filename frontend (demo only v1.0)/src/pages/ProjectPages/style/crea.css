@@ -5,8 +5,8 @@
     margin-top: 20px;
     padding: 20px;
     /* border: 1px solid #ccc; */
-    background-color: #fff;
-    border-radius: 8px;
+    /* background-color: #fff; */
+    /* border-radius: 8px; */
   }
   
   .create-project-container h2 {
@@ -45,8 +45,6 @@
     border-radius: 4px;
     cursor: pointer;
   }
-  
   .create-project-container button:hover {
     background-color: #0056b3;
   }
-  

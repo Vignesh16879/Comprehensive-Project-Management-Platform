@@ -15,6 +15,7 @@ import {
 } from "react-bootstrap";
 
 import './css/conn.css';
+import './css/team.css';
 
 const ProfileItem = (name, profession, img, location, wages, times, exp) => {
   return (

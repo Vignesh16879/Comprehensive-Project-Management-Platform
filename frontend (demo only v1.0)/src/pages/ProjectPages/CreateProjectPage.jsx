@@ -235,7 +235,7 @@ export default class CreateProjectPage extends Component {
           <Row>
             <Col lg={12}>
 
-              <div className="shadow rounded">
+              <div className="shadow rounded" style={{backgroundColor: "#fff"}}>
                 <Row>
                   <Col md={5} className="ps-0 d-none d-md-block">
                     <div className="form-right h-100 bg-primary text-white text-center pt-5" style={{
@@ -330,7 +330,7 @@ export default class CreateProjectPage extends Component {
                                   <Form.Control
                                     name="address2"
                                     type="text"
-                                    placeholder="Street, Landmark"
+                                    placeholder="Add Expertise..."
                                     onChange={(e) => this.setState({ address2: e.target.value })}
                                   />
                                 </Col>

@@ -1,5 +1,5 @@
-import img1 from './img/img1.jpg';
-import img2 from './img/img2.jpg';
+import img1 from './img/team-1.jpg';
+import img2 from './img/team-2.jpg';
 import team1 from "./img/team-1.jpg";
 import team2 from "./img/team-2.jpg";
 import team3 from "./img/team-3.jpg";
@@ -128,4 +128,26 @@ const oprofiles = [
   },
 ];
 
-export { profiles, professions, oprofiles };
+const invited = [
+  {id: 1, name: "Rohan"},
+  {id: 2, name: "Sohan"},
+]
+const requested = [
+  {id: 3, name: "Rohan"},
+  {id: 4, name: "Sohan"},
+]
+const provisional = [
+  {id: 5, name: "Rohan"},
+  {id: 6, name: "Sohan"},
+  {id: 21, name: "Rohan"},
+  {id: 22, name: "Sohan"},
+]
+const final = [
+  {id: 7, name: "Rohan"},
+  {id: 123, name: "Sohan"},
+]
+const manages = {
+  invited: invited, requested: requested, provisional: provisional, final: final,
+}
+
+export { profiles, professions, oprofiles, manages };

@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import BasePage from '../Base';
 
 import { ProfileItem } from './ProfList.jsx';
-import { profiles } from './info';
+import { manages } from './info';
 
 import './css/team.css';
 
@@ -12,7 +12,7 @@ const p_name = "Alpha"
 export default class ManageTeam extends Component {
   constructor(props) {
     super(props);
-    this.state = profiles;
+    this.state = { invited:manages.invited, requested:manages.requested, provisional:manages.provisional, final:manages.final };
     this.onDragEnd = this.onDragEnd.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
   }
@@ -93,25 +93,30 @@ export default class ManageTeam extends Component {
     console.log('Teams updated:', this.state);
   };
 
-  renderList = ({items = []}) => (
-    items.map((item) => (
-      <div
-        className="card mb-2"
-        key={item.id}
-        id={item.id}
-        draggable
-        onDragStart={this.onDragStart}
-        onDragEnd={this.onDragEnd}
-      >
-        <Card.Body>
-          <ProfileItem name={item.name} profession={item.profession} img={item.img} 
-                      location={item.location} wages={item.wages} times={item.times} exp={item.exp}/>
-        </Card.Body>
-      </div>
-    ))
-  );
+  renderList = (items = [{}]) => {
+    console.log(items)
+    if (items){
+      items.map((item, key) => (
+        <div
+          className="card mb-2"
+          key={key}
+          id={item.id}
+          draggable
+          onDragStart={this.onDragStart}
+          onDragEnd={this.onDragEnd}
+        >
+          <Card.Body>
+            <ProfileItem name={item.name} profession={item.profession} img={item.img} 
+                        location={item.location} wages={item.wages} times={item.times} exp={item.exp}/>
+          </Card.Body>
+        </div>
+      ))
+    }
+  };
 
   render() {
+    const { invited, requested, provisional, final } = this.state;
+
     return (
       <BasePage toggleHeader={true} toggleSidebar={true} toggleFooter={false}>
         <Container className="py-5">
@@ -129,19 +134,19 @@ export default class ManageTeam extends Component {
               >
                 <Card>
                   <Card.Header>Invited</Card.Header>
-                  <Card.Body>{this.renderList(this.state.invited)}</Card.Body>
+                  <Card.Body>{this.renderList(invited)}</Card.Body>
                 </Card>
               </div>
               <div
                 className="droppable"
-                onDragLeave={this.onDragLeave}
+                onDragLeave={this.onDragLeave} 
                 onDragEnter={this.onDragEnter}
                 onDragOver={this.onDragOver}
                 onDrop={(e) => this.onDrop(e, 'requested')}
               >
                 <Card>
                   <Card.Header>Requested</Card.Header>
-                  <Card.Body>{this.renderList(this.state.requested)}</Card.Body>
+                  <Card.Body>{this.renderList(requested)}</Card.Body>
                 </Card>
               </div>
             </Col>
@@ -156,7 +161,7 @@ export default class ManageTeam extends Component {
                 onDrop={(e) => this.onDrop(e, 'provisional')}
               >
                 <Card>
-                  <Card.Body>{this.renderList(this.state.provisional)}</Card.Body>
+                  <Card.Body>{this.renderList(provisional)}</Card.Body>
                 </Card>
               </div>
             </Col>
@@ -171,7 +176,7 @@ export default class ManageTeam extends Component {
                 onDrop={(e) => this.onDrop(e, 'final')}
               >
                 <Card>
-                  <Card.Body>{this.renderList(this.state.final)}</Card.Body>
+                  <Card.Body>{this.renderList(final)}</Card.Body>
                 </Card>
               </div>
             </Col>
