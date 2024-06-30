@@ -6,6 +6,9 @@ import './sidebar.css';
 import HomeIcon from '@mui/icons-material/Home';
 import SpeedIcon from '@mui/icons-material/Speed';
 import ProjectIcon from '@mui/icons-material/Assignment';
+import AddchartIcon from '@mui/icons-material/Addchart';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import TaskIcon from '@mui/icons-material/Task';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -50,17 +53,32 @@ const Sidebar = () => {
             {isOpen && <span>Dashboard</span>}
           </Link>
         </li>
-        {projects.map((project) => (
-          <li
-            key={project.id}
-            className={location.pathname === `/project/${project.id}` ? 'active' : ''}
-          >
-            <Link to={`/project/${project.id}`}>
-              {project.icon}
-              {isOpen && <span>{project.name}</span>}
-            </Link>
-          </li>
-        ))}
+        <li className={location.pathname === '/connect' ? 'active' : ''}>
+          <Link to="/connect">
+            <PeopleAltIcon />
+            {isOpen && <span>Connect</span>}
+          </Link>
+        </li>
+
+        {isOpen && <h4>Manage Project</h4>}
+        <li className={location.pathname === `/projects` ? 'active' : ''}>
+          <Link to={`/projects`}>
+            <ProjectIcon/>
+            {isOpen && <span>Projects</span>}
+          </Link>
+        </li>
+        <li className={location.pathname === `/create-project` ? 'active' : ''}>
+          <Link to={`/create-project`}>
+            <AddchartIcon/>
+            {isOpen && <span>Add Project</span>}
+          </Link>
+        </li>
+        <li className={location.pathname === `/assignments` ? 'active' : ''}>
+          <Link to={`/assignments`}>
+            <TaskIcon/>
+            {isOpen && <span>Tasks</span>}
+          </Link>
+        </li>
       </ul>
       <hr/>
       <div className='d-flex flex-column flex-shrink-0 p-3'>

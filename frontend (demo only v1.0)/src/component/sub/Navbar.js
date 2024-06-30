@@ -8,6 +8,8 @@ const about_Options = [
   { label: 'Documents', value: '#Documents' },
   { label: 'Testimonials', value: '#Testimonials' },
   { label: 'F&Qs', value: '#Fnqs' },
+  { label: 'Features', value: '/features' },
+  { label: 'T&Cs', value: '/tnc' },
 ];
 const assignment_Options = [
   { label: 'Completed', value: 'documents' },
@@ -41,8 +43,9 @@ const Navbar = () => {
       <nav className="navbar">
         <div className="nav-link-items">
           <Link to="/projects" className="cool-link">Project List</Link>
-          <Link to="/features" className="cool-link">Features</Link>
-          <Link to="/tnc" className="cool-link">T&C</Link>
+          <Link to="/connect" className="cool-link">Connect</Link>
+          <Link to="/assignments" className="cool-link">Assignments</Link>
+          <Link to="/transactions" className="cool-link">Transactions</Link>
           <Link to="/aboutus" className="cool-link">
             <DropdownLink name="About Us" options={about_Options} onSelect={handleSelect}/> 
           </Link>
