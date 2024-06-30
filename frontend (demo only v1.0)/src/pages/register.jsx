@@ -10,6 +10,7 @@ import profile_avatar from "./images/profile_avatar.png";
 
 import WebsiteTitle from "../info/title";
 import countryOptions from "../info/country";
+import BasePage from './Base';
 
 
 const TITLE = WebsiteTitle + " - Register";
@@ -204,14 +205,14 @@ export default class Register extends Component {
     const { currentStep, firstname, lastname, dob, gender, email, address1, address2, state, city, pincode, country, mobile1, mobile2, otp } = this.state;
 
     return (
-      <>
+      <BasePage toggleHeader={true}>
         <div className="login-page">
           <div className="container">
             <Row>
               <Col lg={12}>
                 <h3 className="mb-3">Register Now</h3>
                 <div className="shadow rounded">
-                  <Row>
+                  <Row style={{backgroundColor: "#fff"}}>
                     <Col md={7} className="pe-0">
                       <div className="form-left h-100 py-5 px-5">
                         <Form id="multi-step-form" action="" method="POST" className="row g-4">
@@ -370,7 +371,7 @@ export default class Register extends Component {
             </Row>
           </div>
         </div>
-      </>
+      </BasePage>
     )
   }
 }
