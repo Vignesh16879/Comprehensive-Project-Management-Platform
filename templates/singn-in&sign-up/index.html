@@ -1,0 +1,95 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Sing-In & Sing-Up</title>
+      <link rel="stylesheet" href="{% static 'singn-in&sign-up/styles.css' %}">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.4.2/sha.js"></script>
+      <script>
+        function hashPassword(password) {
+          var shaObj = new jsSHA("SHA-256", "TEXT");
+          shaObj.update(password);
+          return shaObj.getHash("HEX");
+        }
+  
+        function handleFormSubmit(event) {
+          event.preventDefault();
+          const form = event.target;
+          const passwordField = form.querySelector('input[name="password"]');
+          if (passwordField) {
+            const hashedPassword = hashPassword(passwordField.value);
+            passwordField.value = hashedPassword;
+          }
+          form.submit();
+        }
+  
+        document.addEventListener('DOMContentLoaded', function () {
+          const signupForm = document.querySelector('.signup');
+          const loginForm = document.querySelector('.login');
+          
+          if (signupForm) {
+            signupForm.addEventListener('submit', handleFormSubmit);
+          }
+
+          if (loginForm) {
+            loginForm.addEventListener('submit', handleFormSubmit);
+          }
+        });
+      </script>
+  </head>
+  <body>
+      <div class="wrapper">
+          <div class="title-text">
+            <div class="title login">Login Form</div>
+            <div class="title signup">Signup Form</div>
+          </div>
+          <div class="form-container">
+            <div class="slide-controls">
+              <input type="radio" name="slide" id="login" checked>
+              <input type="radio" name="slide" id="signup">
+              <label for="login" class="slide login">Login</label>
+              <label for="signup" class="slide signup">Signup</label>
+              <div class="slider-tab"></div>
+            </div>
+            <div class="form-inner">
+              {% csrf_token %} 
+              <form class="login" method='post'>
+                <div class="field">
+                  <input name="email" type="email" placeholder="Email Address" required>
+                </div>
+                <div class="field">
+                  <input name="password" type="password" placeholder="Password" required>
+                </div>
+                <!-- <div class="pass-link"><a href="#">Forgot password?</a></div> -->
+                <div class="field btn">
+                  <div class="btn-layer"></div>
+                  <input type="submit" value="Login">
+                </div>
+                <div class="signup-link">Not a member? <a href="">Signup now</a></div>
+              </form>
+              <form class="signup" method='post'> 
+                <div class="field">
+                  <input name="email" type="email" placeholder="Email Address" required>
+                </div>
+                <div class="field">
+                  <input name="password" type="password" placeholder="Password" required>
+                </div>
+                <div class="field">
+                  <input name="confirm_password" type="password" placeholder="Confirm password" required>
+                </div>
+                <div class="field btn">
+                  <div class="btn-layer"></div>
+                  <input type="submit" value="Signup">
+                </div>
+              </form>
+            </div>
+          </div>
+      </div>  
+  </body>
+  <script src="{% static 'singn-in&sign-up/script.js' %}"></script>
+</html>
