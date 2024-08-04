@@ -1,10 +1,12 @@
+# main/admin.py
+
 from django.contrib import admin
-from .models import *
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .models import User
 
-# Register your models here.
+class UserAdmin(BaseUserAdmin):
+    model = User
+    # Define fields to display in admin here
+    # ...
 
-admin.site.register(User)
-admin.site.register(Project)
-admin.site.register(Discussion)
-admin.site.register(Assignment)
-admin.site.register(Submission)
+admin.site.register(User, UserAdmin)
