@@ -112,14 +112,8 @@ def CreateProject(request):
     
     try:
         if request.method == "POST":
-            title = request.POST.get('title')
-            description = request.POST.get('description')
-            tags = request.POST.getlist('tags')  # Assuming tags are sent as a list
-            skills = request.POST.getlist('skills')  # Assuming skills are sent as a list
-            start_date = now()
-            progress = 0
+            project = Project(title=request.POST.get('title'), description=request.POST.get('description'), tags=list(request.POST.getlist('tags')), skills=list(request.POST.getlist('skills')), start_date=now(), progress=request.POST.get('progress'))
             user = request.user
-            project = Project(title=title, description=description, tags=tags, skills=skills, start_date=start_date, progress=progress)
             project.host.add(user)
             project.user.add(user)
             project.save()
