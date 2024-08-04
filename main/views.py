@@ -144,13 +144,7 @@ def ProjectView(request, ProjectID):
                     comment = Discussion(title=request.POST.get("title"), description=request.POST.get("description"), reply_to=None, date=now(), files=request.POST.get("files"), by=request.user)
                     comment.save()
                 elif "reply" in req:
-                    title = request.POST.get("title")
-                    description = request.POST.get("description")
-                    reply_to = request.POST.get("reply_to")
-                    date = now()
-                    files = request.POST.get("files")
-                    by = request.user
-                    comment = Discussion(title=title, description=description, reply_to=reply_to, date=date, files=files, by=by)
+                    comment = Discussion(title=request.POST.get("title"), description=request.POST.get("description"), reply_to=request.POST.get("reply_to"), date=now(), files=request.POST.get("files"), by=request.user)
                     comment.save()
             elif "members" in req:
                 if "add" in req:
