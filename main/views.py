@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
 from .models import *
-from .forms import *
 
 
 # Create your views here.
@@ -60,7 +59,9 @@ def Register(request):
     
     try:
         if request.method == "POST":
-            name = request.POST.get('name')
+            username = request.POST.get("username")
+            f_name = request.POST.get('f_name')
+            l_name = request.POST.get('l_name')
             email = request.POST.get('email')
             password = request.POST.get('password')
             confirm_password = request.POST.get('confirm_password')
@@ -70,7 +71,7 @@ def Register(request):
             elif User.objects.filter(email=email).exists():
                 messages.error(request, 'Email is already registered.')
             else:
-                User.objects.create_user(username=email, name=name, email=email, password=password).save()
+                User.objects.create_user(username=username, name=f"{f_name} {l_name}", f_name=f_name, l_name=l_name, email=email, password=password).save()
                 messages.success(request, 'Account created successfully.')
                 
                 return redirect('/')
@@ -215,23 +216,41 @@ def ProjectView(request, ProjectID):
 
 @csrf_exempt
 def Profile(request):
+    data = {}
+    
     try:
-        data = {}
+        user = get_object_or_404(User, id=request.user)
+        data = {"user" : user}
         
-        user = get_object_or_404(Project, id=request.user)
-        data = {
-            "user" : user
-        }
+        if request.method == "POST":
+            req = request.POST
+            
+            if "Profile" in req:
+                pass
+            elif "Billing" in req:
+                pass
+            elif "Security" in req:
+                pass
+            elif "Notifications" in req:
+                notifications = get_object_or_404(Notification, to=request.user)
+                data["notifications"] = notifications
     except Exception as e:
         print("An error occurred:", e)
         traceback.print_exc()
-        data = {}
     
     return render(
         request,
         "profile/index.html",
         data
     )
+
+
+def Colab(request):
+    return render(request, 'colab/index.html', {})
+
+
+def Dashboard(request):
+    pass
 
 
 def Logout(request):

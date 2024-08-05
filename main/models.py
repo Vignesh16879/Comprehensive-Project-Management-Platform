@@ -104,6 +104,7 @@ class Submission(Model):
 
 
 class Notification(Model):
+    type = CharField(max_length=120)
     title = CharField(max_length=120)
     description = TextField()
     date = DateTimeField(default=now)

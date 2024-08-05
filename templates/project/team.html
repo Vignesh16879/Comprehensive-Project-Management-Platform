@@ -1,0 +1,141 @@
+<!-- Teams & Members -->
+
+<div class="container">
+    <h2>Current Members</h2>
+    <div class="row">
+        {% for member in members %}
+        <div class="col-lg-4">
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <div class="media">
+                        <img class="d-flex mr-3 rounded-circle img-thumbnail thumb-lg" 
+                            src="{% if member.profile %}{{ member.profile }}{% else %}http://bootdey.com/img/Content/avatar/avatar1.png{% endif %}" 
+                            alt="{{ member.username }}" />
+                        <div class="media-body">
+                            <h5 class="mt-0 font-18 mb-1">{{ member.username }}</h5>
+                            <p class="text-muted font-14">{{ member.role }}</p>
+                            <ul class="social-links list-inline mb-0">
+                                <!-- Placeholder links -->
+                                <li class="list-inline-item">
+                                    <a title="Facebook" data-placement="top" data-toggle="tooltip" class="tooltips" href="#"><i class="fa fa-facebook"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a title="Twitter" data-placement="top" data-toggle="tooltip" class="tooltips" href="#"><i class="fa fa-twitter"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a title="Phone" data-placement="top" data-toggle="tooltip" class="tooltips" href="#"><i class="fa fa-phone"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a title="Skype" data-placement="top" data-toggle="tooltip" class="tooltips" href="#"><i class="fa fa-skype"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-margin">
+                <div class="card-body">
+                    <div class="row search-body">
+                        <div class="col-lg-12">
+                            <div class="search-result">
+                                <div class="result-header">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="records">Potential Members</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="result-body">
+                                    <div class="table-responsive">
+                                        <table class="table widget-26">
+                                            <thead>
+                                                <tr>
+                                                    <th>Profile</th>
+                                                    <th>Name</th>
+                                                    <th>Role</th>
+                                                    <th>Type</th>
+                                                    <th>Wages</th>
+                                                    <th>Expertise</th>
+                                                    <th>Options</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for member in pseudo_members %}
+                                                <tr>
+                                                    <td>
+                                                        <div class="widget-26-job-emp-img">
+                                                            <img class="d-flex mr-3 rounded-circle img-thumbnail thumb-lg" 
+                                                                src="{% if member.user.profile %}{{ member.user.profile }}{% else %}http://bootdey.com/img/Content/avatar/avatar1.png{% endif %}" 
+                                                                alt="{{ member.username }}" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {{member.username}}
+                                                    </td>
+                                                    <td>
+                                                        <div class="widget-26-job-title">
+                                                            <a href="#">{{member.role}}</a>
+                                                            {% comment %} <p class="m-0">
+                                                                <a href="#" class="employer-name">{{member.prev}}</a> 
+                                                                <span class="text-muted time">{{member.request_sent}} days ago</span>
+                                                            </p> {% endcomment %}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="widget-26-job-info">
+                                                            <p class="type m-0">{{member.user.organization_name}}</p>
+                                                            <p class="text-muted m-0">in <span class="location">{{member.user.location}}</span></p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="widget-26-job-salary">$ {{member.user.wage}}/hr</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="widget-26-job-category bg-soft-base">
+                                                            <i class="indicator bg-base"></i>
+                                                            <span>{{member.user.expertise}}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {% comment %} <a href="#" class="btn btn-primary btn-xs">
+                                                            <i class="fa fa-folder"></i> View
+                                                        </a> {% endcomment %}
+                                                        <form method="post" action="{% url 'project' project.id %}">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="project_id" value="{{ project.id }}">
+                                                            <button type="submit" class="btn btn-info btn-xs">
+                                                                <i class="fa fa-pencil"></i> Hire
+                                                            </button>
+                                                        </form>
+                                                        <form method="post" action="{% url 'project' project.id %}" style="display:inline;">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="project_id" value="{{ project.id }}">
+                                                            <button type="submit" class="btn btn-danger btn-xs">
+                                                                <i class="fa fa-trash-o"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

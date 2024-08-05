@@ -1,0 +1,104 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> {% endcomment %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    {% comment %} {% include './carousel.html' %} {% endcomment %}
+
+    <div class="main-container" style="padding-top:97px;">
+        {% include './searchfilter.html' %}
+        {% include './categories.html' %}
+        {% include './profiles.html' %}
+
+    </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const profiles = {{ profiles|safe }};
+    let searchQuery = '';
+    let selectedProfession = null;
+
+    function handleSearchChange(e) {
+      searchQuery = e.target.value;
+    }
+
+    function filterProfilesByCategory(category) {
+      const filteredProfiles = profiles.filter(profile => profile.times === category);
+      setRecommendedProfiles(filteredProfiles);
+    }
+
+    function setRecommendedProfiles(filteredProfiles) {
+      const profileList = document.getElementById("profile-list");
+      profileList.innerHTML = '';
+      filteredProfiles.forEach(profile => {
+        const profileItem = document.createElement('div');
+        profileItem.className = 'profile-item';
+        profileItem.innerHTML = `
+          <div class="col-md-6">
+            <div class="job-item p-4 mb-4 card">
+                <div class="row g-4">
+                  <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                    <img class="flex-shrink-0 img-fluid border rounded" src="${profile.img}" alt="" style="width: 80px; height: 80px;">
+                    <div class="text-start ps-4">
+                      <h4 class="job-name">${profile.name}</h4>
+                      <h5 class="mb-3 job-profession">${profile.profession}</h5>
+                      <span class="text-truncate me-3 job-location">
+                        <i class="fa fa-map-marker-alt text-primary me-2"></i>
+                        ${profile.location}
+                      </span>
+                      <span class="text-truncate me-3 job-times">
+                        <i class="far fa-clock text-primary me-2"></i>
+                        ${profile.times}
+                      </span>
+                      <span class="text-truncate me-0 job-wages">
+                        <i class="far fa-money-bill-alt text-primary me-2"></i>
+                        ${profile.wages}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                    <div class="d-flex mb-3">
+                      <button class="btn btn-light btn-square me-3">
+                        <i class="far fa-heart text-primary"></i>
+                      </button>
+                      <button class="btn btn-primary">Connect</button>
+                    </div>
+                    <small class="text-truncate job-experience">
+                      <i class="far fa-calendar-alt text-primary me-2"></i>
+                      Experience: ${profile.exp}
+                    </small>
+                  </div>
+                </div>
+            </div>
+        </div>`;
+        profileList.appendChild(profileItem);
+      });
+    }
+
+    document.getElementById('search-query').addEventListener('input', handleSearchChange);
+    document.getElementById('category-select').addEventListener('change', function() {
+      filterProfilesByCategory(this.value);
+    });
+    document.getElementById('search-button').addEventListener('click', function() {
+      const filteredProfiles = profiles.filter(profile => profile.name.toLowerCase().includes(searchQuery.toLowerCase()));
+      setRecommendedProfiles(filteredProfiles);
+    });
+
+    setRecommendedProfiles(profiles); // Initialize the profiles display
+  });
+</script>
+<script src={% static "colab/script.js" %}></script>
+
+</body>
+</html>
