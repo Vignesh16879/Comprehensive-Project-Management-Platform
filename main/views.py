@@ -14,10 +14,12 @@ from .models import *
 
 # Create your views here.
 def Home(request):
+    data = {}
+    
     try:
-        data = {}
-        user = get_object_or_404(User, id=request.user)
+        user = get_object_or_404(User, id=request.user.id)
         auth = authenticate(request, username=user.email, password=user.password)
+        data = {"user" : request.user}
     except Exception as e:
         print("An error occurred:", e)
         traceback.print_exc()
@@ -113,8 +115,9 @@ def CreateProject(request):
     
     try:
         if request.method == "POST":
-            project = Project(title=request.POST.get('title'), description=request.POST.get('description'), tags=list(request.POST.getlist('tags')), skills=list(request.POST.getlist('skills')), start_date=now(), progress=request.POST.get('progress'))
+            project = Project(title=request.POST.get('title'), description=request.POST.get('description'), tags=list(request.POST.getlist('tags')), skills=list(request.POST.getlist('skills')), start_date=now(), end_date=now(), progress=request.POST.get('progress'), rating=0.0)
             user = request.user
+            project.save()
             project.host.add(user)
             project.user.add(user)
             project.save()
@@ -219,7 +222,7 @@ def Profile(request):
     data = {}
     
     try:
-        user = get_object_or_404(User, id=request.user)
+        user = get_object_or_404(User, id=request.user.id)
         data = {"user" : user}
         
         if request.method == "POST":

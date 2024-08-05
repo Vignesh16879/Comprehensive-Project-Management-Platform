@@ -85,12 +85,12 @@
                                         <!-- Form Group (first name)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputFirstName">First name</label>
-                                            <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{ user.first_name }}">
+                                            <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{ user.f_name }}">
                                         </div>
                                         <!-- Form Group (last name)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLastName">Last name</label>
-                                            <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="{{ user.last_name }}">
+                                            <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="{{ user.l_name }}">
                                         </div>
                                     </div>
                                     <!-- Form Row-->
@@ -121,7 +121,7 @@
                                         <!-- Form Group (birthday)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{ user.birthday|date:'m/d/Y' }}">
+                                            <input class="form-control" id="inputBirthday" type="date" name="birthday" placeholder="Enter your birthday" value="{{ user.birthday|date:'m/d/Y' }}">
                                         </div>
                                     </div>
                                     <!-- Save changes button-->
