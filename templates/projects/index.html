@@ -52,7 +52,7 @@
                                     <small>Created {{ project.start_date|date:"d.m.Y" }}</small>
                                 </td>
                                 <td class="p-team">
-                                    {% for member in project.team.all %}
+                                    {% for member in project.user.all %}
                                         <a href="#"><img alt="image" 
                                             src="{% if member.user.profile %}{{ member.user.profile }}
                                                 {% else %}http://bootdey.com/img/Content/avatar/avatar1.png{% endif %}"
@@ -63,19 +63,19 @@
                                     <div class="progress">
                                         <div style="width: {{ project.progress }}%;" class="progress-bar progress-bar-striped progress-bar-animated bg-success"></div>
                                     </div>
-                                    <small>{{ project.overall_progress }}% Complete</small>
+                                    <small>{{ project.progress }}% Complete</small>
                                 </td>
                                 <td>
-                                    {% if project.status == 'Active' %}
-                                    <span class="badge bg-primary">{{ project.status }}</span>
+                                    {% if project.status == 'Active' or project.status == 'Ongoing' %}
+                                        <span class="badge bg-primary">Active</span>
                                     {% endif %}
 
                                     {% if project.status == 'Suspended' %}
-                                    <span class="badge bg-warning">Suspended</span>
+                                        <span class="badge bg-warning">Suspended</span>
                                     {% endif %}
 
                                     {% if project.status == 'Deleted' %}
-                                    <span class="badge bg-danger">Deleted</span>
+                                        <span class="badge bg-danger">Deleted</span>
                                     {% endif %}
 
                                     {% if project.status == 'Completed' %}
@@ -87,22 +87,19 @@
                                         <i class="fa fa-folder"></i> View
                                     </a>
                                     
-                                    {% if user in hosts %}
-                                    <a href="{% url 'project' project.id %}" class="btn btn-info btn-sm">
-                                        <i class="fa fa-pencil"></i> Edit
-                                    </a>
+                                    {% if user in project.host.all %}
+                                        <a href="{% url 'project' project.id %}" class="btn btn-info btn-sm">
+                                            <i class="fa fa-pencil"></i> Edit
+                                        </a>
+                                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ project.id }}', '{{ project.title }}')">
+                                            <i class="fa fa-trash-o"></i> Delete
+                                        </button>
                                     {% endif %}
                                     
-                                    {% if user in project.host %}
-                                    <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ project.id }}', '{{ project.title }}')">
-                                        <i class="fa fa-trash-o"></i> Delete
-                                    </button>
-                                    {% endif %}
-                                    
-                                    {% if user not in project.user and user not in project.potential_user %}
-                                    <a href="{% url 'project' project.id %}" class="btn btn-success btn-sm">
-                                        <i class="fa fa-pencil"></i> Join
-                                    </a> 
+                                    {% if user not in project.user.all and user not in project.potential_user.all %}
+                                        <a href="{% url 'project' project.id %}" class="btn btn-success btn-sm">
+                                            <i class="fa fa-pencil"></i> Join
+                                        </a> 
                                     {% endif %}
                                 </td>
                                 <form id="delete-form-{{ project.id }}" method="POST" action="{% url 'project' project.id %}" style="display: none;">

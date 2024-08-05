@@ -76,7 +76,7 @@ def Register(request):
                 User.objects.create_user(username=username, name=f"{f_name} {l_name}", f_name=f_name, l_name=l_name, email=email, password=password).save()
                 messages.success(request, 'Account created successfully.')
                 
-                return redirect('/')
+                return redirect('/login')
     except Exception as e:
         print("An error occurred:", e)
         traceback.print_exc()
@@ -84,12 +84,12 @@ def Register(request):
     return render(request, 'register/index.html', data)
 
 
-def SendNotification(to, bys, title, description, date):
+def SendNotification(tos, by, title, description, date):
     try:
-        bys = list(bys)
+        tos = list(tos)
         
-        for by in bys:
-            notification = Notification(to=to, by=by, title=title, description=description, date=date, is_viewed=False)
+        for to in tos:
+            notification = Notification(to=User.objects.get(id=to.id), by=User.objects.get(id=by.id), title=title, description=description, date=date, is_viewed=False)
             notification.save()
     except Exception as e:
         print("An error occurred:", e)
@@ -101,13 +101,17 @@ def Projects(request):
     data = {}
     
     try:
-        data = {"projects" : Project.objects.all()}
-        print(data["projects"][0].host)
+        data = {"projects" : Project.objects.all(), "user" : User.objects.get(id=request.user.id)}
     except Exception as e:
         print("An error occurred:", e)
         traceback.print_exc()
     
     return render(request, "projects/index.html", data)
+
+
+def JoinProject(project, user):
+    project.potential_user.add(User.objects.get(id=user.id))
+    SendNotification(project.host.all(), user, "Request to Join.", f"Hey, I am {user.name}. I want to join your project.", now())
 
 
 @csrf_exempt
@@ -135,7 +139,7 @@ def CreateProject(request):
 
 
 @csrf_exempt
-def ProjectView(request, ProjectID):
+def ProjectView(request, ProjectID, tag="Project Info"):
     data = {}
     
     try:
