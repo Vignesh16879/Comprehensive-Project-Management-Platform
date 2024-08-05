@@ -120,13 +120,11 @@ def CreateProject(request):
         
         if request.method == "POST":
             project = Project(title=request.POST.get('title'), description=request.POST.get('description'), tags=list(request.POST.getlist('tags')), skills=list(request.POST.getlist('skills')), start_date=now(), end_date=now(), progress=request.POST.get('progress'), rating=0.0, status="Ongoing")
-            user = request.user
             project.save()
-            project.host.add(user)
-            project.user.add(user)
-            project.save()
-            user.projects.add(project)
-            user.save()
+            project.host.add(User.objects.get(id=request.user.id))
+            project.user.add(User.objects.get(id=request.user.id))
+            user = get_object_or_404(User, id=request.user.id)
+            user.projects.add(Project.objects.get(id=project.id))
             
             return redirect("/projects")
     except Exception as e:
