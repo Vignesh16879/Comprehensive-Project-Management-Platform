@@ -102,6 +102,7 @@ def Projects(request):
     
     try:
         data = {"projects" : Project.objects.all()}
+        print(data["projects"][0].host)
     except Exception as e:
         print("An error occurred:", e)
         traceback.print_exc()
@@ -114,8 +115,11 @@ def CreateProject(request):
     data = {}
     
     try:
+        if not request.user.is_authenticated:
+            return redirect("/login")
+        
         if request.method == "POST":
-            project = Project(title=request.POST.get('title'), description=request.POST.get('description'), tags=list(request.POST.getlist('tags')), skills=list(request.POST.getlist('skills')), start_date=now(), end_date=now(), progress=request.POST.get('progress'), rating=0.0)
+            project = Project(title=request.POST.get('title'), description=request.POST.get('description'), tags=list(request.POST.getlist('tags')), skills=list(request.POST.getlist('skills')), start_date=now(), end_date=now(), progress=request.POST.get('progress'), rating=0.0, status="Ongoing")
             user = request.user
             project.save()
             project.host.add(user)

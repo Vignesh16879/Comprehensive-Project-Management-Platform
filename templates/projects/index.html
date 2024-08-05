@@ -61,7 +61,7 @@
                                 </td>
                                 <td class="p-progress">
                                     <div class="progress">
-                                        <div style="width: {{ project.overall_progress }}%;" class="progress-bar progress-bar-striped progress-bar-animated bg-success"></div>
+                                        <div style="width: {{ project.progress }}%;" class="progress-bar progress-bar-striped progress-bar-animated bg-success"></div>
                                     </div>
                                     <small>{{ project.overall_progress }}% Complete</small>
                                 </td>
@@ -87,19 +87,25 @@
                                         <i class="fa fa-folder"></i> View
                                     </a>
                                     
-                                    <a href="{% url 'project_settings' project.id %}" class="btn btn-info btn-sm">
+                                    {% if user in hosts %}
+                                    <a href="{% url 'project' project.id %}" class="btn btn-info btn-sm">
                                         <i class="fa fa-pencil"></i> Edit
                                     </a>
+                                    {% endif %}
                                     
+                                    {% if user in project.host %}
                                     <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ project.id }}', '{{ project.title }}')">
                                         <i class="fa fa-trash-o"></i> Delete
                                     </button>
+                                    {% endif %}
                                     
+                                    {% if user not in project.user and user not in project.potential_user %}
                                     <a href="{% url 'project' project.id %}" class="btn btn-success btn-sm">
                                         <i class="fa fa-pencil"></i> Join
                                     </a> 
+                                    {% endif %}
                                 </td>
-                                <form id="delete-form-{{ project.id }}" method="POST" action="{% url 'delete_project' project.id %}" style="display: none;">
+                                <form id="delete-form-{{ project.id }}" method="POST" action="{% url 'project' project.id %}" style="display: none;">
                                     {% csrf_token %}
                                 </form>
                             </tr>
