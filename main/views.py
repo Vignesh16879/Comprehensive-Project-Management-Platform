@@ -91,6 +91,9 @@ def Projects(request):
     data = {}
     
     try:
+        if not request.user.is_authenticated:
+            return redirect("/login")
+        
         data = {"projects" : Project.objects.all(), "user" : User.objects.get(id=request.user.id)}
     except Exception as e:
         print("An error occurred:", e)
@@ -133,8 +136,12 @@ def ProjectView(request, ProjectID, tab):
     data = {'tab' : tab}
     
     try:
+        if not request.user.is_authenticated:
+            return redirect("/login")
+        
         project = get_object_or_404(Project, id=ProjectID)
-        data = {'tab' : tab,'project': project, 'users': project.user.all(), 'potential_users': project.potential_user.all(), 'assignments': project.assignments.all(), 'comments': project.comments.all(), 'tags': project.tags, 'languages': project.languages, 'skills': project.skills}
+        data.update({"user" : User.objects.get(id=request.user.id)})
+        data.update({'tab' : tab, 'project': project, 'users': project.user.all(), 'potential_users': project.potential_user.all(), 'assignments': project.assignments.all(), 'comments': project.comments.all(), 'tags': project.tags, 'languages': project.languages, 'skills': project.skills})
         
         if request.method == "POST":
             req = request.POST
@@ -148,36 +155,35 @@ def ProjectView(request, ProjectID, tab):
                     comment.save()
             elif "members" in req:
                 if "add" in req:
-                    invite = request.POST.get("invited")
+                    invite = User.objects.get(id=request.POST.get("invited"))
                     project.invited.add(invite)
-                    project.save()
                     # send notification
                 elif "hire" in req:
-                    hire = request.POST.get("hire")
+                    hire = User.objects.get(id=request.POST.get("hire"))
                     project.user.add(hire)
                     project.potential_user.remove(hire)
                     hire.projects.add(project)
                     # send notification
                 elif "delete" in req:
-                    hire = request.POST.get("hire")
+                    hire = User.objects.get(id=request.POST.get("hire"))
                     project.potential_user.remove(hire)
                     # send notification
                 elif "remove" in req:
                     if request.user in project.host.all():
-                        member = request.POST.get("member")
+                        member = User.objects.get(id=request.POST.get("member"))
                         project.user.remove(member)
                         project.host.remove(member)
                         project.save()
                         # send notification
                 elif "makehost" in req:
                     if request.user in project.host.all():
-                        member = request.POST.get("member")
+                        member = User.objects.get(id=request.POST.get("member"))
                         project.host.add(member)
                         project.save()
                         # send notification
                 elif "drophost" in req:
                     if len(project.host.all()) > 2 and request.user in project.host.all():
-                        member = request.POST.get("member")
+                        member = User.objects.get(id=request.POST.get("member"))
                         project.host.remove(member)
                         project.save()
                         # send notification
@@ -193,7 +199,6 @@ def ProjectView(request, ProjectID, tab):
                     submission = Submission(title=request.POST.get("title"), description=request.POST.get("description"), files=request.POST.get("files"), assignment = assignment, by=request.user)
                     submission.save()
                     SendNotification(assignment.by, request.user, f"Assignment-{title} Submitted", f"Assignment-{title} submitted by {request.user.name} on date {now()}.", now())
-                    pass
                 elif "delete" in req:
                     assignment = get_object_or_404(Assignment, id=request.POST.get["assignment"])
                     title = assignment.title
@@ -220,12 +225,14 @@ def ProjectView(request, ProjectID, tab):
 
 
 @csrf_exempt
-def Profile(request):
-    data = {}
+def Profile(request, tab="profile"):
+    data = {'tab' : tab}
     
     try:
-        user = get_object_or_404(User, id=request.user.id)
-        data = {"user" : user}
+        if not request.user.is_authenticated:
+            return redirect("/login")
+        
+        data.update({"user" : User.objects.get(id=request.user.id)})
         
         if request.method == "POST":
             req = request.POST
@@ -237,25 +244,42 @@ def Profile(request):
             elif "Security" in req:
                 pass
             elif "Notifications" in req:
-                notifications = get_object_or_404(Notification, to=request.user)
-                data["notifications"] = notifications
+                data.update({"notifications" : get_object_or_404(Notification, to=request.user)})
     except Exception as e:
         print("An error occurred:", e)
         traceback.print_exc()
     
-    return render(
-        request,
-        "profile/index.html",
-        data
-    )
+    return render(request, "profile/index.html", data)
 
 
 def Colab(request):
-    return render(request, 'colab/index.html', {})
+    data = {}
+    
+    try:
+        if not request.user.is_authenticated:
+            return redirect("/login")
+        
+        data = {"user" : User.objects.get(id=request.user.id)}
+    except Exception as e:
+        print("An error occurred:", e)
+        traceback.print_exc()
+    
+    return render(request, 'colab/index.html', data)
 
 
 def Dashboard(request):
-    pass
+    data = {}
+    
+    try:
+        if not request.user.is_authenticated:
+            return redirect("/login")
+        
+        data = {"user" : User.objects.get(id=request.user.id)}
+    except Exception as e:
+        print("An error occurred:", e)
+        traceback.print_exc()
+    
+    return render(request, 'dashboard/index.html', data)
 
 
 def Logout(request):
