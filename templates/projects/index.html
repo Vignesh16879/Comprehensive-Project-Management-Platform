@@ -83,12 +83,12 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <a href="{% url 'project' project.id %}" class="btn btn-primary btn-sm">
+                                    <a href="{% url 'project' project.id 'info' %}" class="btn btn-primary btn-sm">
                                         <i class="fa fa-folder"></i> View
                                     </a>
                                     
                                     {% if user in project.host.all %}
-                                        <a href="{% url 'project' project.id %}" class="btn btn-info btn-sm">
+                                        <a href="{% url 'project' project.id 'settings' %}" class="btn btn-info btn-sm">
                                             <i class="fa fa-pencil"></i> Edit
                                         </a>
                                         <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ project.id }}', '{{ project.title }}')">
@@ -97,12 +97,12 @@
                                     {% endif %}
                                     
                                     {% if user not in project.user.all and user not in project.potential_user.all %}
-                                        <a href="{% url 'project' project.id %}" class="btn btn-success btn-sm">
+                                        <a href="{% url 'project' project.id 'info' %}" class="btn btn-success btn-sm">
                                             <i class="fa fa-pencil"></i> Join
                                         </a> 
                                     {% endif %}
                                 </td>
-                                <form id="delete-form-{{ project.id }}" method="POST" action="{% url 'project' project.id %}" style="display: none;">
+                                <form id="delete-form-{{ project.id }}" method="POST" action="{% url 'project' project.id 'settings' %}" style="display: none;">
                                     {% csrf_token %}
                                 </form>
                             </tr>

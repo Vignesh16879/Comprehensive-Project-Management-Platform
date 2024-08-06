@@ -18,12 +18,11 @@ def Home(request):
     
     try:
         user = get_object_or_404(User, id=request.user.id)
-        auth = authenticate(request, username=user.email, password=user.password)
+        user = authenticate(request, username=user.email, password=user.password)
         data = {"user" : request.user}
     except Exception as e:
         print("An error occurred:", e)
         traceback.print_exc()
-        data = {}
     
     return render(
         request,
@@ -38,9 +37,7 @@ def Login(request):
     
     try:
         if request.method == "POST":
-            email = request.POST.get('email')
-            password = request.POST.get('password')
-            user = authenticate(request, email=email, password=password)
+            user = authenticate(request, email=request.POST.get('email'), password=request.POST.get('password'))
             
             if user is not None:
                 auth_login(request, user)
@@ -61,19 +58,12 @@ def Register(request):
     
     try:
         if request.method == "POST":
-            username = request.POST.get("username")
-            f_name = request.POST.get('f_name')
-            l_name = request.POST.get('l_name')
-            email = request.POST.get('email')
-            password = request.POST.get('password')
-            confirm_password = request.POST.get('confirm_password')
-            
-            if password != confirm_password:
+            if request.POST.get('password') != request.POST.get('confirm_password'):
                 messages.error(request, 'Passwords do not match.')
-            elif User.objects.filter(email=email).exists():
+            elif User.objects.filter(email=request.POST.get('email')).exists():
                 messages.error(request, 'Email is already registered.')
             else:
-                User.objects.create_user(username=username, name=f"{f_name} {l_name}", f_name=f_name, l_name=l_name, email=email, password=password).save()
+                User.objects.create_user(username=request.POST.get("username"), name=f"{request.POST.get('f_name')} {request.POST.get('l_name')}", f_name=request.POST.get('f_name'), l_name=request.POST.get('l_name'), email=request.POST.get('email'), password=request.POST.get('password')).save()
                 messages.success(request, 'Account created successfully.')
                 
                 return redirect('/login')
@@ -139,12 +129,12 @@ def CreateProject(request):
 
 
 @csrf_exempt
-def ProjectView(request, ProjectID, tag="Project Info"):
-    data = {}
+def ProjectView(request, ProjectID, tab):
+    data = {'tab' : tab}
     
     try:
         project = get_object_or_404(Project, id=ProjectID)
-        data = {'project': project, 'users': project.user.all(), 'potential_users': project.potential_user.all(), 'assignments': project.assignments.all(), 'comments': project.comments.all(), 'tags': project.tags, 'languages': project.languages, 'skills': project.skills}
+        data = {'tab' : tab,'project': project, 'users': project.user.all(), 'potential_users': project.potential_user.all(), 'assignments': project.assignments.all(), 'comments': project.comments.all(), 'tags': project.tags, 'languages': project.languages, 'skills': project.skills}
         
         if request.method == "POST":
             req = request.POST
@@ -192,7 +182,7 @@ def ProjectView(request, ProjectID, tag="Project Info"):
                         project.save()
                         # send notification
             elif "assignment" in req:
-                if "add":
+                if "add" in req:
                     if request.user in project.host.all():
                         assignment = Assignment(title=request.POST.get("title"), description=request.POST.get("description"), start_date=now(), end_date=request.POST.get("end_date"), files=request.POST.get("files"), by=request.user)
                         send_to = project.user.all()
@@ -212,8 +202,14 @@ def ProjectView(request, ProjectID, tag="Project Info"):
                     send_to.remove(request.user)
                     SendNotification(send_to, request.user, f"Assignment-{title} deleted", f"Assignment-{title} deleted by {request.user.name} on date {now()}.", now())
             elif "settings" in req:
-                # send notification
-                pass
+                if "change" in req:
+                    pass
+                elif "completed" in req:
+                    pass
+                elif "suspend" in req:
+                    pass
+                elif "delete" in req:
+                    pass
         else:
             pass
     except Exception as e:
