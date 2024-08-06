@@ -33,9 +33,9 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             {% if user.is_authenticated %}
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="projects" class="nav-item nav-link">Projects</a>
-                    <a href="colab" class="nav-item nav-link">Collab</a>
-                    <a href="dash" class="nav-item nav-link">Dashboard</a>
+                    <a href="/projects" class="nav-item nav-link">Projects</a>
+                    <a href="/colab" class="nav-item nav-link">Collab</a>
+                    <a href="/dashboard" class="nav-item nav-link">Dashboard</a>
                     <div class="nav-item dropdown">
                         <a href="#about" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">About Us</a>
                         <div class="dropdown-menu m-0">
@@ -52,7 +52,7 @@
                 </a>
             {% else %}
                 <a href="{% url 'login' %}" class="btn btn-primary ms-3">Login</a>
-                <a href="{% url 'login' %}" class="btn btn-primary ms-3">Register</a>
+                <a href="{% url 'register' %}" class="btn btn-primary ms-3">Register</a>
                 <div class="navbar-nav ms-auto py-0">
                     <div class="nav-item dropdown">
                         <a href="#about" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">About Us</a>
@@ -75,8 +75,8 @@
                 <img class="w-100" src="{% static 'images/carousel-1.jpg' %}" alt="Image">
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                     <div class="p-3" style="max-width: 900px;">
-                        <h5 class="text-white text-uppercase mb-3 animated slideInDown">Boost & Support<</h5>
-                        <h1 class="display-1 text-white mb-md-4 animated zoomIn">Empower Your Projects, Elevate Your Team<</h1>
+                        <h5 class="text-white text-uppercase mb-3 animated slideInDown">Boost & Support</h5>
+                        <h1 class="display-1 text-white mb-md-4 animated zoomIn">Empower Your Projects, Elevate Your Team</h1>
                         <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                     <div class="p-3" style="max-width: 900px;">
                         <h5 class="text-white text-uppercase mb-3 animated slideInDown">Aim & Achieve</h5>
-                        <h1 class="display-1 text-white mb-md-4 animated zoomIn">Streamline Your Workflow, Achieve Your Goals<</h1>
+                        <h1 class="display-1 text-white mb-md-4 animated zoomIn">Streamline Your Workflow, Achieve Your Goals</h1>
                         <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
                     </div>
                 </div>

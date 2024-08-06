@@ -6,7 +6,8 @@
                 <form method="post">
                     {% csrf_token %}
                     <input type="hidden" name="discussions" value="1">
-                    <textarea class="form-control" name="comment" rows="2" placeholder="What are you thinking?"></textarea>
+                    <input type="text" name="title" />
+                    <textarea class="form-control" name="description" rows="2" placeholder="What are you thinking?"></textarea>
                     <div class="mar-top clearfix">
                         <button class="btn btn-sm btn-primary pull-right" type="submit">
                             <i class="fa fa-pencil fa-fw"></i> Share
@@ -18,7 +19,7 @@
                 </form>
             </div>
         </div>
-        {% for discussion in discussions %}
+        {% for discussion in comments %}
         <div class="panel">
             <div class="panel-body">
                 <div class="media-block">
@@ -29,10 +30,10 @@
                     </a>
                     <div class="media-body">
                         <div class="mar-btm">
-                            <a href="#" class="btn-link text-semibold media-heading box-inline">{{ discussion.user.username }}</a>
+                            <a href="#" class="btn-link text-semibold media-heading box-inline">{{ discussion.user.name }}</a>
                             <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - {{ discussion.time }}</p>
                         </div>
-                        <p>{{ discussion.comment }}</p>
+                        <p>{{ discussion.description }}</p>
                         <div class="pad-ver">
                             <div class="btn-group">
                                 <a class="btn btn-sm btn-default btn-hover-success" href="#"><i class="fa fa-thumbs-up"></i></a>

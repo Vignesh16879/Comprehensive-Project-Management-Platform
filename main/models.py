@@ -46,6 +46,7 @@ class User(AbstractUser):
     submissions = ManyToManyField('Submission', related_name='UserSubmissions')
     groups = ManyToManyField(Group, related_name='custom_user_set')
     user_permissions = ManyToManyField(Permission, related_name='custom_user_set_permissions')
+    files = FileField(upload_to='user_files/', null=True, blank=True)
     #######################
     objects = UserManager()
 
@@ -63,25 +64,28 @@ class Project(Model):
     potential_user = ManyToManyField('User', related_name='PotentialUser', blank=True)
     assignments = ManyToManyField('Assignment', related_name='ProjectAssignment', blank=True)
     status = CharField(max_length=120)
+    files = FileField(upload_to='project_files/', null=True, blank=True)
     comments = ManyToManyField('Discussion', related_name='ProjectDiscussion', blank=True)
     tags = JSONField(default=list, blank=True)
     languages = JSONField(default=list, blank=True)
     skills = JSONField(default=list, blank=True)
+    # add links
 
 
 class Team(Model):
     name = CharField(max_length=120)
-    project = OneToOneField('Project', related_name='TeamProject', on_delete=CASCADE)
+    project = ForeignKey('Project', related_name='TeamProject', on_delete=CASCADE)
     users = ManyToManyField('User', related_name='TeamUser')
 
 
 class Discussion(Model):
     title = CharField(max_length=120)
     description = TextField()
-    reply_to = OneToOneField('Discussion', related_name='Comments', on_delete=CASCADE)
-    files = JSONField(default=list)
+    project = ForeignKey('Project', related_name='projectdiscuss', on_delete=CASCADE)
+    reply_to = ForeignKey('Discussion', related_name='Comments', on_delete=CASCADE, null=True, blank=True)
+    files = FileField(upload_to='discussion_files/', null=True, blank=True)
     date = DateTimeField(default=now)
-    by = OneToOneField('User', related_name='UserDiscussion', on_delete=CASCADE)
+    by = ForeignKey('User', related_name='UserDiscussion', on_delete=CASCADE)
 
 
 class Assignment(Model):
@@ -89,20 +93,20 @@ class Assignment(Model):
     description = TextField()
     start_date = DateTimeField(default=now)
     end_date = DateTimeField()
-    files = JSONField(default=list)
-    by = OneToOneField('User', related_name='HostAssignment', on_delete=CASCADE)
+    files = FileField(upload_to='assignment_files/', null=True, blank=True)
+    by = ForeignKey('User', related_name='HostAssignment', on_delete=CASCADE)
     comments = ManyToManyField('Discussion', related_name='AssignmentDiscussion')
-    project = OneToOneField('Project', related_name='AssignmentProject', on_delete=CASCADE)
-    submitted_by = ManyToManyField('User', related_name='AssignmentUser')
+    project = ForeignKey('Project', related_name='AssignmentProject', on_delete=CASCADE)
+    submitted_by = ForeignKey('User', related_name='AssignmentUser', on_delete=CASCADE)
 
 
 class Submission(Model):
     title = CharField(max_length=120)
     description = TextField()
-    files = JSONField(default=list)
+    files = FileField(upload_to='submission_files/', null=True, blank=True)
     date = DateTimeField(default=now)
-    by = OneToOneField('User', related_name='SubmissionUser', on_delete=CASCADE)
-    assignment = OneToOneField('Assignment', related_name='SubmissionAssignment', on_delete=CASCADE)
+    by = ForeignKey('User', related_name='SubmissionUser', on_delete=CASCADE)
+    assignment = ForeignKey('Assignment', related_name='SubmissionAssignment', on_delete=CASCADE)
 
 
 class Notification(Model):
@@ -111,5 +115,5 @@ class Notification(Model):
     description = TextField()
     date = DateTimeField(default=now)
     is_viewed = BooleanField(default=False)
-    by = OneToOneField('User', related_name='tempNotification', on_delete=CASCADE)
-    to = OneToOneField('User', related_name='UserNotification', on_delete=CASCADE)
+    by = ForeignKey('User', related_name='tempNotification', on_delete=CASCADE)
+    to = ForeignKey('User', related_name='UserNotification', on_delete=CASCADE)
