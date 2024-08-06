@@ -203,13 +203,12 @@ def ProjectView(request, projectID):
                     assignment = Assignment(title=request.POST.get("title"), description=request.POST.get("description"), start_date=now(), end_date=request.POST.get("end_date"), files=request.POST.get("files"), by=request.user)
                     send_to = project.user.all()
                     send_to.remove(request.user)
-                    # send notification
+                    SendNotification(send_to, request.user, f"New Assignment published.", f"New assignment made by {request.user.name} on date {now()} of the project {project.title()} submit it by {assignment.end_date}.")
             elif "submit" in req:
                 assignment = request.POST.get("assignment")
                 submission = Submission(title=request.POST.get("title"), description=request.POST.get("description"), files=request.POST.get("files"), assignment = assignment, by=request.user)
                 submission.save()
                 SendNotification(assignment.by, request.user, f"Assignment-{title} Submitted", f"Assignment-{title} submitted by {request.user.name} on date {now()}.", now())
-                pass
             elif "delete" in req:
                 assignment = get_object_or_404(Assignment, id=request.POST.get["assignment"])
                 title = assignment.title
