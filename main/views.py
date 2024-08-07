@@ -215,13 +215,13 @@ def ProjectView(request, ProjectID, tab):
                     SendNotification(send_to, request.user, f"Assignment-{title} deleted", f"Assignment-{title} deleted by {request.user.name} on date {now()}.", now())
             elif "settings" in req:
                 if "change" in req:
-                    pass
+                    Project.objects.filter(id=ProjectID).update(title=request.POST.get('title'), description=request.POST.get('description'), objectives=request.POST.get('objectives'), status=request.POST.get('status'), hiring=request.POST.get('hiring'))
                 elif "completed" in req:
-                    pass
+                    Project.objects.filter(id=ProjectID).update(status="Completed", hiring=False)
                 elif "suspend" in req:
-                    pass
+                    Project.objects.filter(id=ProjectID).update(status="Suspended", hiring=False)
                 elif "delete" in req:
-                    pass
+                    Project.objects.filter(id=ProjectID).delete()
         else:
             pass
     except Exception as e:

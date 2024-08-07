@@ -67,8 +67,10 @@ class Project(Model):
     files = FileField(upload_to='project_files/', null=True, blank=True)
     comments = ManyToManyField('Discussion', related_name='ProjectDiscussion', blank=True)
     tags = JSONField(default=list, blank=True)
+    objectives = JSONField(default=list, blank=True)
     languages = JSONField(default=list, blank=True)
     skills = JSONField(default=list, blank=True)
+    hiring = BooleanField(default=True)
     # add links
     github_link = CharField(max_length=200)
     twitter_link = CharField(max_length=200)
