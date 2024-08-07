@@ -70,6 +70,11 @@ class Project(Model):
     languages = JSONField(default=list, blank=True)
     skills = JSONField(default=list, blank=True)
     # add links
+    github_link = CharField(max_length=200)
+    twitter_link = CharField(max_length=200)
+    facebook_link = CharField(max_length=200)
+    instagram_link = CharField(max_length=200)
+    web_link = CharField(max_length=200)
 
 
 class Team(Model):

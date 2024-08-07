@@ -103,8 +103,12 @@ def Projects(request):
 
 
 def JoinProject(project, user):
-    project.potential_user.add(User.objects.get(id=user.id))
-    SendNotification(project.host.all(), user, "Request to Join.", f"Hey, I am {user.name}. I want to join your project.", now())
+    if user in project.invited.all():
+        project.user.add(User.objects.get(id=user.id))
+        SendNotification(project.host.all(), user, f"User: {user.name} joined the project.")
+    else:
+        project.potential_user.add(User.objects.get(id=user.id))
+        SendNotification(project.host.all(), user, "Request to Join.", f"Hey, I am {user.name}. I want to join your project.", now())
 
 
 @csrf_exempt
